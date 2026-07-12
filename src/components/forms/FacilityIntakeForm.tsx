@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 export default function FacilityIntakeForm() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     // Section 1: Meta
     preparedFor: "",
@@ -53,10 +55,31 @@ export default function FacilityIntakeForm() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Facility Intake Form Payload:", JSON.stringify(formData, null, 2));
-    alert("Form submitted! Check console for payload.");
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch("http://2.25.76.245:5678/webhook-test/argyle-facility-intake", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      setStatus('success');
+      // Optionally reset form here
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus('error');
+      setErrorMessage("Something went wrong submitting your request. Please try again.");
+    }
   };
 
   const inputClass = "w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 font-sans text-sm text-[#0B2038] outline-none transition-all focus:ring-2 focus:ring-[#008080] focus:border-transparent placeholder-slate-400";
@@ -302,14 +325,30 @@ export default function FacilityIntakeForm() {
             </div>
           </div>
         </section>
-
-        <div className="pt-6 text-center">
-          <button
-            type="submit"
-            className="w-full md:w-auto rounded-lg bg-[#008080] px-12 py-4 font-sans text-[15px] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-[#006666] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#008080] focus:ring-offset-2"
-          >
-            Request Talent
-          </button>
+        {/* Submit */}
+        <div className="mt-12 flex flex-col items-center border-t border-slate-200 pt-8">
+          {status === 'success' ? (
+            <div className="text-center p-6 bg-green-50 text-green-800 rounded-lg border border-green-200 w-full">
+              <h3 className="font-bold text-lg mb-2">Request Submitted Successfully</h3>
+              <p>Thank you for choosing Argyle Medical Staffing. Our team will review your request and contact you shortly.</p>
+            </div>
+          ) : (
+            <>
+              <button 
+                type="submit" 
+                disabled={status === 'loading'}
+                className="w-full md:w-auto rounded bg-[#008080] px-12 py-4 text-base font-bold text-white shadow-md transition-colors hover:bg-[#006666] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008080] focus-visible:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {status === 'loading' ? 'Submitting...' : 'Submit Staffing Request'}
+              </button>
+              {status === 'error' && (
+                <p className="mt-4 text-red-600 font-medium text-sm">{errorMessage}</p>
+              )}
+              <p className="mt-4 font-sans text-xs text-slate-500">
+                By submitting this form, you agree to our Terms of Service and Privacy Policy.
+              </p>
+            </>
+          )}
         </div>
       </form>
     </div>
