@@ -1,0 +1,12 @@
+node_modules
+dist
+.impeccable
+.claude
+.gemini
+.tempmediaStorage
+*.log
+*.webp
+*.png
+walkthrough.md
+implementation_plan.md
+task.md

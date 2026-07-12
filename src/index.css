@@ -1,0 +1,176 @@
+@import "tailwindcss";
+@source "./**/*.{ts,tsx}";
+@source "../index.html";
+/* Fonts loaded via <link> in index.html: Bricolage Grotesque (display) + DM Sans (body) */
+
+
+/*
+  Token system — clinical authority, light register.
+  All neutrals tinted toward indigo (hue 264) per colorize.md:
+  "Add a tiny chroma value (0.005–0.015) to all your neutrals,
+  hued toward whatever your brand color is."
+  No pure blacks, no warm grays.
+*/
+
+@theme {
+  /* ── Display font: Recia (variable, serif editorial authority) */
+  --font-display: "Recia", serif;
+  /* ── Heading utility class custom property */
+  --font-heading: "Recia", serif;
+  /* ── Body font: Supreme (humanist, clean, globally inherited) */
+  --font-sans:    "Supreme",   -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ── Background & Surface ──────────────────────────────────────── */
+  --color-brand-bg:      #FFFFFF;
+  --color-brand-surface: #F8FAFC;
+  --color-brand-surface-raised: #FFFFFF;
+
+  /* ── Ink scale (Navy driven) ────────────────────────────────── */
+  --color-brand-ink:   #0A2540;   /* Deep Navy */
+  --color-brand-body:  #162E4A;   /* Navy */
+  --color-brand-muted: #64748B;   /* Slate 500 equivalent */
+  --color-brand-ghost: #94A3B8;
+
+  /* ── Rule / border ─────────────────────────────────────────────── */
+  --color-brand-rule:  #E2E8F0;
+  --color-brand-rule-strong: #CBD5E1;
+
+  /* ── Primary: Teal (Barton Brand Color) ─────────────── */
+  --color-brand-primary:     #007C74;
+  --color-brand-primary-dk:  #00635D;
+  --color-brand-primary-lt:  #D4F1F4;
+  --color-brand-primary-mid: #4DD2D0;
+
+  /* ── Accent: Yellow ─────────────────────────  */
+  --color-brand-accent:    #F5A623;
+  --color-brand-accent-lt: #FBE4A8;
+
+  /* ── Easing curves (from animate.md) ───────────────────────────── */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ── Keyframes ──────────────────────────────────────────────────── */
+  --animate-fade-up: fade-up 0.72s var(--ease-out-expo) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+}
+
+@layer base {
+  html  { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+    font-kerning: normal;
+    /* OpenType features for polish */
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-brand-ink);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    font-optical-sizing: auto;
+  }
+
+  p, span, button {
+    font-family: var(--font-sans);
+  }
+
+  /* ALL-CAPS labels: always open-tracked per typeset.md */
+  .label-caps {
+    letter-spacing: 0.10em;
+    font-variant-caps: all-small-caps;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Glassmorphism layer (single seamless, no nesting) ── */
+.glass-panel {
+  background: oklch(1.000 0.005 264 / 0.72);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid oklch(1.000 0 0 / 0.60);
+  box-shadow:
+    0 4px  8px  -2px oklch(0.148 0.022 264 / 0.06),
+    0 16px 40px -8px oklch(0.148 0.022 264 / 0.10),
+    0 40px 80px -16px oklch(0.148 0.022 264 / 0.06),
+    0 0 0 1px oklch(1.000 0 0 / 0.55) inset;
+}
+
+/* Pathway row — hover shift only, no card border */
+.pathway-row {
+  transition:
+    background-color 180ms var(--ease-out-quart),
+    box-shadow       180ms var(--ease-out-quart),
+    transform        160ms var(--ease-out-quart);
+  border-radius: 14px;
+  padding: 1.125rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+}
+.pathway-row:hover  { background-color: oklch(0.979 0.008 264 / 0.80); transform: translateX(3px); }
+.pathway-row:focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 2px; }
+
+/* Icon pip */
+.pathway-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--color-brand-rule);
+  background: var(--color-brand-surface);
+  transition: transform 200ms var(--ease-out-expo), box-shadow 200ms var(--ease-out-expo);
+}
+.pathway-row:hover .pathway-icon {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px -2px currentColor;
+}
+
+/* Chevron */
+.pathway-chevron {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 160ms ease, transform 160ms var(--ease-out-expo);
+  flex-shrink: 0;
+  color: var(--color-brand-muted);
+}
+.pathway-row:hover  .pathway-chevron,
+.pathway-row:focus-visible .pathway-chevron { opacity: 1; transform: translateX(0); }
+
+/* Divider between pathway rows */
+.pathway-divider {
+  height: 1px;
+  background: var(--color-brand-rule);
+  margin: 0 1.25rem;
+}
