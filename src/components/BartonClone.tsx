@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import USMapGraphic from './USMapGraphic';
+import facilityMeeting from '../assets/facility_meeting.png';
+import collage1 from '../assets/collage_1.png';
 
 // Section 2: Stats Badge Wheel
 const StatsWheel = () => {
@@ -476,7 +478,7 @@ const FacilityProps = () => {
           {/* Large Image (1 Column) */}
           <div className="lg:col-span-1 min-h-[400px] lg:min-h-full relative rounded-none overflow-hidden shadow-2xl">
             <img 
-              src="/facility_meeting.png" 
+              src={facilityMeeting} 
               alt="Facility Meeting" 
               className="absolute inset-0 h-full w-full object-cover"
             />
@@ -496,7 +498,7 @@ const FindJobs = () => (
     {/* Wide Background Image */}
     <div className="absolute inset-0 z-0">
       <img 
-        src="/collage_1.png" 
+        src={collage1} 
         alt="Locum Professional" 
         className="h-full w-full object-cover object-[center_30%]"
       />

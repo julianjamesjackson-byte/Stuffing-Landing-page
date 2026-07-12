@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import argyleLogo from '../assets/argyle-logo.jpeg';
+import hospitalBg from '../assets/hospital-bg.png';
 
 export default function Hero() {
   return (
@@ -7,7 +9,7 @@ export default function Hero() {
       <nav className="relative z-20 flex w-full items-center justify-between bg-white px-8 py-5 shadow-sm lg:px-12">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <img src="/argyle-logo.jpeg" alt="Argyle Medical Staffing Logo" className="h-24 w-24 rounded-full object-contain shadow-sm" />
+          <img src={argyleLogo} alt="Argyle Medical Staffing Logo" className="h-24 w-24 rounded-full object-contain shadow-sm" />
           <span className="font-display text-2xl font-bold text-slate-900">
             Argyle
             <span className="block text-[10px] font-normal uppercase tracking-widest text-slate-500">Medical Staffing</span>
@@ -50,7 +52,7 @@ export default function Hero() {
       {/* ── Hero Section (Full Background) ───────────────────────────── */}
       <main
         className="relative flex min-h-[75vh] w-full items-center overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/hospital-bg.png")' }}
+        style={{ backgroundImage: `url(${hospitalBg})` }}
       >
         {/* Solid white fade at the bottom */}
         <div className="absolute inset-0 bg-white/30"></div>

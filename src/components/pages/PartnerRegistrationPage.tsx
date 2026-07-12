@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import argyleLogo from '../../assets/argyle-logo.jpeg';
 import PartnerRegistrationForm from '../forms/PartnerRegistrationForm';
 
 export default function PartnerRegistrationPage() {
@@ -8,7 +9,7 @@ export default function PartnerRegistrationPage() {
       <div className="w-full md:w-[65%] p-3 sm:p-6 md:p-12 lg:p-16 flex flex-col items-center">
         <div className="w-full max-w-4xl mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <img src="/argyle-logo.jpeg" alt="Argyle Medical Staffing" className="h-20 w-20 rounded-full object-contain shadow-sm" />
+            <img src={argyleLogo} alt="Argyle Medical Staffing" className="h-20 w-20 rounded-full object-contain shadow-sm" />
             <span className="font-display text-xl font-bold text-slate-900">
               Argyle
               <span className="block text-[10px] font-normal uppercase tracking-widest text-slate-500">Medical Staffing</span>
