@@ -22,8 +22,8 @@ const StatsWheel = () => {
   return (
     <section className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24">
       {/* Subtle Background Glows */}
-      <div className="absolute left-0 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-brand-primary-lt/30 blur-[120px] pointer-events-none"></div>
-      <div className="absolute right-0 top-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
+      <div className="absolute left-0 top-0 h-[600px] w-[600px] max-w-full -translate-x-1/2 -translate-y-1/4 rounded-full bg-brand-primary-lt/30 blur-[120px] pointer-events-none"></div>
+      <div className="absolute right-0 top-0 h-[600px] w-[600px] max-w-full translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
 
       <div className="relative z-10 mx-auto max-w-6xl text-center">
         <h2 className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink lg:text-[2.5rem] animate-fade-up">
@@ -158,8 +158,8 @@ const FloatingCollageSection = () => {
   return (
     <section id="about" ref={sectionRef} className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24">
       {/* Background Ambient Glows */}
-      <div className="absolute left-1/4 top-1/4 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></div>
-      <div className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></div>
+      <div className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></div>
+      <div className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></div>
 
       {/* Floating Images — 4 Corner Frame */}
       <motion.div

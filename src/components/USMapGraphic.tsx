@@ -40,8 +40,8 @@ const USMapGraphic = () => {
   return (
     <div className="relative h-full w-full">
       {/* Premium Background Glows */}
-      <div className="absolute top-0 right-1/4 h-[500px] w-[500px] rounded-full bg-[#007C74]/20 opacity-60 blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-1/3 h-[400px] w-[600px] rounded-full bg-amber-400/10 opacity-70 blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-1/4 h-[500px] w-[500px] max-w-full rounded-full bg-[#007C74]/20 opacity-60 blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-1/3 h-[400px] w-[600px] max-w-full rounded-full bg-amber-400/10 opacity-70 blur-[120px] pointer-events-none"></div>
 
       
       <ComposableMap projection="geoAlbersUsa" className="h-full w-full">
