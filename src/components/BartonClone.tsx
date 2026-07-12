@@ -20,13 +20,13 @@ const StatsWheel = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white py-24 px-8 lg:px-24">
+    <section className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24">
       {/* Subtle Background Glows */}
       <div className="absolute left-0 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-brand-primary-lt/30 blur-[120px] pointer-events-none"></div>
       <div className="absolute right-0 top-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
 
       <div className="relative z-10 mx-auto max-w-6xl text-center">
-        <h2 className="mb-20 font-display text-3xl font-bold text-brand-ink lg:text-[2.5rem] animate-fade-up">
+        <h2 className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink lg:text-[2.5rem] animate-fade-up">
           Precision Healthcare Staffing Nationwide
         </h2>
 
@@ -54,13 +54,13 @@ const StatsWheel = () => {
             {leftStats.map((item, i) => (
               <div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
+                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
                 style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
               >
-                <div className="flex h-11 items-center justify-center rounded-full bg-brand-primary-lt px-5 text-base font-bold text-[#005a54]">
+                <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
                   {item.stat}
                 </div>
-                <span className="ml-4 text-base font-medium text-brand-ink/90">{item.text}</span>
+                <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
               </div>
             ))}
           </div>
@@ -71,14 +71,14 @@ const StatsWheel = () => {
             style={{ animationDelay: '300ms', animationFillMode: 'both' }}
           >
             {/* Concentric Precision Rings */}
-            <div className="flex h-[240px] w-[240px] items-center justify-center rounded-full bg-[#D5F2F2] animate-[pulse_4s_ease-in-out_infinite]">
-              <div className="flex h-[180px] w-[180px] items-center justify-center rounded-full bg-[#87E1DE]">
-                <div tabIndex={0} role="button" aria-label="Argyle Brand Emblem" className="group flex h-[120px] w-[120px] cursor-pointer items-center justify-center rounded-full border-[6px] border-brand-primary bg-white shadow-md transition-all duration-500 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+            <div className="flex h-[180px] w-[180px] sm:h-[240px] sm:w-[240px] items-center justify-center rounded-full bg-[#D5F2F2] animate-[pulse_4s_ease-in-out_infinite]">
+              <div className="flex h-[130px] w-[130px] sm:h-[180px] sm:w-[180px] items-center justify-center rounded-full bg-[#87E1DE]">
+                <div tabIndex={0} role="button" aria-label="Argyle Brand Emblem" className="group flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white shadow-md transition-all duration-500 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
                   {/* J Logo */}
-                  <div className="relative flex items-center justify-center text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12">
+                    <div className="relative flex items-center justify-center text-[2.5rem] sm:text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12">
                     <span className="absolute">A</span>
                     {/* Minimalist ring to mimic the stylized 'B' swirl */}
-                    <div className="absolute h-[72px] w-[72px] rounded-full border-[6px] border-transparent border-b-brand-primary border-l-brand-primary -rotate-45 transition-transform duration-700 group-hover:rotate-[135deg]"></div>
+                    <div className="absolute h-[50px] w-[50px] sm:h-[72px] sm:w-[72px] rounded-full border-[4px] sm:border-[6px] border-transparent border-b-brand-primary border-l-brand-primary -rotate-45 transition-transform duration-700 group-hover:rotate-[135deg]"></div>
                   </div>
                 </div>
               </div>
@@ -90,13 +90,13 @@ const StatsWheel = () => {
             {rightStats.map((item, i) => (
               <div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
+                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
                 style={{ animationDelay: `${(i + 3) * 150}ms`, animationFillMode: 'both' }}
               >
-                <div className="flex h-11 items-center justify-center rounded-full bg-brand-primary-lt px-5 text-base font-bold text-[#005a54]">
+                <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
                   {item.stat}
                 </div>
-                <span className="ml-4 text-base font-medium text-brand-ink/90">{item.text}</span>
+                <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
               </div>
             ))}
           </div>
@@ -104,7 +104,7 @@ const StatsWheel = () => {
         </div>
 
         {/* Footer Text */}
-        <p className="mx-auto mt-20 max-w-3xl font-sans text-[1.05rem] leading-relaxed text-slate-600">
+        <p className="mx-auto mt-10 sm:mt-20 max-w-3xl font-sans text-sm sm:text-[1.05rem] leading-relaxed text-slate-600">
           At Argyle Staffing and Recruiting, we make healthcare hiring simple, strategic, and reliable. Our experienced recruiters connect healthcare organizations with highly qualified professionals who are ready to make an immediate impact, while helping clinicians discover career opportunities that align with their skills and goals. By combining industry expertise with personalized service, we deliver staffing solutions that save time, reduce hiring challenges, and support exceptional patient care. When hiring matters most, healthcare organizations trust Argyle to deliver the right talent with confidence.
         </p>
       </div>
@@ -156,7 +156,7 @@ const FloatingCollageSection = () => {
   };
 
   return (
-    <section id="about" ref={sectionRef} className="relative overflow-hidden bg-[#F8FAFC] py-32 px-8 lg:py-56 lg:px-24">
+    <section id="about" ref={sectionRef} className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24">
       {/* Background Ambient Glows */}
       <div className="absolute left-1/4 top-1/4 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></div>
       <div className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></div>
@@ -191,7 +191,7 @@ const FloatingCollageSection = () => {
         transition={{ duration: 1, ease: [0, 0, 0.2, 1] }}
         className="relative z-10 mx-auto flex max-w-2xl flex-col items-center justify-center text-center px-4"
       >
-        <h2 className="mb-6 font-display text-4xl font-medium tracking-tight text-[#0A2540] md:text-5xl lg:text-[3.5rem] leading-[1.1]">
+        <h2 className="mb-6 font-display text-2xl sm:text-4xl font-medium tracking-tight text-[#0A2540] md:text-5xl lg:text-[3.5rem] leading-[1.1]">
           More control over your healthcare career.<br />
           <span className="font-bold">Less friction getting there.</span>
         </h2>
@@ -249,13 +249,13 @@ const Timeline = () => {
   ];
 
   return (
-    <section className="bg-white py-32 px-4 lg:px-12">
+    <section className="bg-white py-16 px-4 sm:py-32 lg:px-12">
       <div className="mx-auto max-w-6xl text-center">
         {/* Header Text */}
-        <h2 className="mb-4 font-display text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] lg:text-[2.5rem]">
-          With Argyle Medical Staffing, you're not walking<br />
-          into your next role alone.<br />
-          Let us handle the details so you can focus on what you do best.
+        <h2 className="mb-4 font-display text-xl sm:text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] lg:text-[2.5rem]">
+          With Argyle Medical Staffing, you're not walking<br className="hidden md:block" />
+          {' '}into your next role alone.<br className="hidden md:block" />
+          {' '}Let us handle the details so you can focus on what you do best.
         </h2>
 
         {/* Timeline Graphic */}
@@ -304,12 +304,12 @@ const Timeline = () => {
 const USMap = () => (
   <section className="bg-slate-50 py-24">
     <div className="flex flex-col items-center text-center px-8 lg:px-24">
-      <h2 className="mb-4 font-display text-4xl font-extrabold text-brand-ink">
+      <h2 className="mb-4 font-display text-2xl sm:text-4xl font-extrabold text-brand-ink">
         Nationwide Coverage
       </h2>
-      <p className="text-lg text-brand-ink/70">We place providers in all 50 states.</p>
+      <p className="text-base sm:text-lg text-brand-ink/70">We place providers in all 50 states.</p>
     </div>
-    <div className="mx-auto mt-12 w-full max-w-6xl px-6 h-[450px] sm:h-[550px] md:h-[700px] lg:h-[800px]">
+    <div className="mx-auto mt-8 sm:mt-12 w-full max-w-6xl px-2 sm:px-6 h-[300px] sm:h-[450px] md:h-[700px] lg:h-[800px]">
       <USMapGraphic />
     </div>
   </section>
@@ -371,22 +371,22 @@ const Specialties = () => {
   return (
     <section id="specialties" className="bg-white py-24 px-4 lg:px-12">
       <div className="mx-auto max-w-7xl text-center">
-        <h2 className="mb-4 font-display text-[2rem] font-medium text-[#0A2540] lg:text-[2.5rem]">
+        <h2 className="mb-4 font-display text-xl sm:text-[2rem] font-medium text-[#0A2540] lg:text-[2.5rem]">
           Our Clinical Specialties
         </h2>
-        <p className="mx-auto mb-20 max-w-2xl text-[16px] leading-relaxed text-[#0A2540]/80 text-center">
+        <p className="mx-auto mb-10 sm:mb-20 max-w-2xl text-sm sm:text-[16px] leading-relaxed text-[#0A2540]/80 text-center">
           Argyle Medical Staffing connects top-tier talent across high-demand medical fields. We seamlessly match credentialed professionals with facilities nationwide.
         </p>
         
         <div className="grid grid-cols-2 gap-x-4 gap-y-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {specialtiesData.map((spec, i) => (
             <div key={i} className="group flex flex-col items-center">
-              <div className="mb-6 flex h-[120px] w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-md">
-                <svg className="h-14 w-14 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <div className="mb-4 sm:mb-6 flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-md">
+                <svg className="h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   {spec.icon}
                 </svg>
               </div>
-              <h3 className="whitespace-pre-line text-center text-[15px] font-medium leading-snug text-slate-900 transition-colors">
+              <h3 className="whitespace-pre-line text-center text-[12px] sm:text-[13px] lg:text-[15px] font-medium leading-snug text-slate-900 transition-colors">
                 {spec.title}
               </h3>
             </div>
@@ -434,15 +434,15 @@ const FacilityProps = () => {
   ];
 
   return (
-    <section id="facilities" className="bg-[#0A2540] py-32 px-4 lg:px-12 text-white">
+    <section id="facilities" className="bg-[#0A2540] py-16 px-4 sm:py-32 lg:px-12 text-white">
       <div className="mx-auto max-w-7xl">
         {/* Header Text */}
-        <div className="text-center mb-20">
-          <h2 className="mb-6 font-display text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]">
-            Strategic healthcare staffing for facilities<br />
-            that need reliable coverage in critical roles
+        <div className="text-center mb-10 sm:mb-20">
+          <h2 className="mb-6 font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]">
+            Strategic healthcare staffing for facilities<br className="hidden md:block" />
+            {' '}that need reliable coverage in critical roles
           </h2>
-          <p className="mx-auto max-w-2xl text-[16px] leading-relaxed text-slate-300 text-center">
+          <p className="mx-auto max-w-2xl text-sm sm:text-[16px] leading-relaxed text-slate-300 text-center">
             Argyle Medical Staffing provides comprehensive staffing solutions for hospitals, health systems, and healthcare organizations facing urgent gaps in coverage - coast-to-coast. From rural clinics to major health systems, we move quickly, match thoughtfully, and stay accountable from first call through start date.
           </p>
           <div className="mt-10">
@@ -457,17 +457,17 @@ const FacilityProps = () => {
           {/* Cards (2 Columns) */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {cards.map((card, i) => (
-              <div key={i} className="flex gap-5 rounded-none bg-[#0F3052] p-8 border border-[#1A456E] transition-colors hover:bg-[#133A63]">
+              <div key={i} className="flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors hover:bg-[#133A63]">
                 <div className="flex-shrink-0">
-                  <svg className="h-10 w-10 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg className="h-8 w-8 sm:h-10 sm:w-10 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     {card.icon}
                   </svg>
                 </div>
                 <div>
-                  <h3 className="mb-2 text-[16px] font-bold text-white leading-tight">
+                  <h3 className="mb-2 text-[14px] sm:text-[16px] font-bold text-white leading-tight">
                     {card.title}
                   </h3>
-                  <p className="text-[14px] leading-relaxed text-[#8DA6C1]">
+                  <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#8DA6C1]">
                     {card.desc}
                   </p>
                 </div>
@@ -476,7 +476,7 @@ const FacilityProps = () => {
           </div>
 
           {/* Large Image (1 Column) */}
-          <div className="lg:col-span-1 min-h-[400px] lg:min-h-full relative rounded-none overflow-hidden shadow-2xl">
+          <div className="lg:col-span-1 min-h-[250px] sm:min-h-[400px] lg:min-h-full relative rounded-none overflow-hidden shadow-2xl">
             <img 
               src={facilityMeeting} 
               alt="Facility Meeting" 
@@ -494,7 +494,7 @@ const FacilityProps = () => {
 
 // Section 8: Find Jobs Banner
 const FindJobs = () => (
-  <section id="clinicians" className="relative overflow-hidden bg-[#0A2540] py-32 lg:py-40">
+  <section id="clinicians" className="relative overflow-hidden bg-[#0A2540] py-16 sm:py-32 lg:py-40">
     {/* Wide Background Image */}
     <div className="absolute inset-0 z-0">
       <img 
@@ -507,13 +507,13 @@ const FindJobs = () => (
     </div>
     
     {/* Content Container pushed to the right */}
-    <div className="relative z-10 mx-auto flex max-w-7xl justify-end px-8 lg:px-12">
+    <div className="relative z-10 mx-auto flex max-w-7xl justify-end px-4 sm:px-8 lg:px-12">
       <div className="w-full lg:w-1/2 flex flex-col justify-center py-10">
-        <h2 className="mb-4 font-display text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem]">
-          Find healthcare opportunities<br />
-          that fit how you want to practice
+        <h2 className="mb-4 font-display text-2xl sm:text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem]">
+          Find healthcare opportunities<br className="hidden md:block" />
+          {' '}that fit how you want to practice
         </h2>
-        <p className="mb-10 text-[18px] text-white/90 font-medium">
+        <p className="mb-8 sm:mb-10 text-sm sm:text-[18px] text-white/90 font-medium">
           Whether you are looking for permanent placement, contract roles, or flexible shifts, your next rewarding role starts here.
         </p>
         <div>
@@ -531,12 +531,12 @@ const Footer = () => {
 
 
   return (
-    <footer className="bg-[#051A2E] pt-20 pb-8 px-4 lg:px-12 text-white font-sans">
+    <footer className="bg-[#051A2E] pt-12 sm:pt-20 pb-8 px-4 lg:px-12 text-white font-sans">
       <h2 className="sr-only">Footer Directory</h2>
       <div className="mx-auto max-w-7xl">
         {/* Top Link Grids */}
         <h3 className="sr-only">Directory Sections</h3>
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4 border-b border-[#1A334D] pb-16">
+        <div className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-4 border-b border-[#1A334D] pb-10 sm:pb-16">
           {/* Col 1 */}
           <div>
             <h4 className="mb-4 text-[12px] font-bold text-[#8DA6C1] uppercase tracking-wider">Company</h4>
