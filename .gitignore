@@ -6,7 +6,7 @@ dist
 .tempmediaStorage
 *.log
 *.webp
-*.png
+
 walkthrough.md
 implementation_plan.md
 task.md
