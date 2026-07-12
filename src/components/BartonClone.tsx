@@ -161,7 +161,7 @@ const FloatingCollageSection = () => {
 
       {/* Floating Images — 4 Corner Frame */}
       <motion.div
-        className="absolute inset-0 pointer-events-none z-0"
+        className="absolute inset-0 pointer-events-none z-0 hidden lg:block"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
