@@ -1,4 +1,6 @@
-export const nurseImageVariant = {
+import type { Variants, Variant } from 'framer-motion';
+
+export const nurseImageVariant: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { 
     opacity: 1, 
@@ -7,7 +9,7 @@ export const nurseImageVariant = {
   }
 };
 
-export const containerVariant = {
+export const containerVariant: Variants = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1, 
@@ -15,7 +17,7 @@ export const containerVariant = {
   }
 };
 
-export const itemVariant = {
+export const itemVariant: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 
@@ -24,7 +26,7 @@ export const itemVariant = {
   }
 };
 
-export const headerVariant = {
+export const headerVariant: Variants = {
   hidden: { opacity: 0, y: -20 },
   visible: { 
     opacity: 1, 
@@ -33,7 +35,7 @@ export const headerVariant = {
   }
 };
 
-export const navItemVariant = {
+export const navItemVariant: Variants = {
   hidden: { opacity: 0, y: -10 },
   visible: { 
     opacity: 1, 
@@ -42,7 +44,7 @@ export const navItemVariant = {
   }
 };
 
-export const wordVariant = {
+export const wordVariant: Variants = {
   hidden: { opacity: 0, y: 15 },
   visible: { 
     opacity: 1, 
@@ -51,7 +53,7 @@ export const wordVariant = {
   }
 };
 
-export const h1Variant = {
+export const h1Variant: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 
@@ -60,7 +62,7 @@ export const h1Variant = {
   }
 };
 
-export const buttonHoverVariant = {
+export const buttonHoverVariant: Variant = {
   scale: 1.04,
   y: -2,
   transition: { duration: 0.3 }
