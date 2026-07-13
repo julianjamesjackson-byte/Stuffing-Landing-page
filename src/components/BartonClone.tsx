@@ -1,80 +1,168 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring, animate, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import USMapGraphic from './USMapGraphic';
 import facilityMeeting from '../assets/facility_meeting.png';
 import collage1 from '../assets/collage_1.png';
+import {
+  visContainerVariant,
+  corePulseVariant,
+  nodeDockVariant,
+  lineDrawVariant,
+  detailPopupVariant,
+  wordVariant,
+  itemVariant
+} from './animations';
 
 // Section 2: Stats Badge Wheel
+const CountingNumber = ({ value, suffix = "", prefix = "", isFloat = false }: { value: number, suffix?: string, prefix?: string, isFloat?: boolean }) => {
+  const [display, setDisplay] = useState(0);
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true, amount: 0.5 });
+  
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, value, {
+        duration: 2,
+        ease: "easeOut",
+        onUpdate: (v) => setDisplay(isFloat ? Number(v.toFixed(1)) : Math.round(v))
+      });
+      return controls.stop;
+    }
+  }, [isInView, value, isFloat]);
+
+  return <span ref={nodeRef}>{prefix}{display}{suffix}</span>;
+}
+
+const ParticleBackground = ({ speedMultiplier = 1 }: { speedMultiplier?: number }) => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {Array.from({ length: 40 }).map((_, i) => {
+        const duration = (Math.random() * 10 + 10) / speedMultiplier;
+        return (
+          <motion.div
+            key={i}
+            className="absolute h-1.5 w-1.5 rounded-full bg-brand-primary/30 blur-[1px]"
+            initial={{
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+              opacity: Math.random() * 0.5 + 0.1,
+              scale: Math.random() * 0.5 + 0.5
+            }}
+            animate={{
+              y: [null, Math.random() * -150 - 50],
+              x: [null, Math.random() * 150 - 75],
+              opacity: [null, Math.random() * 0.8 + 0.2, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+// Section 2: Stats Badge Wheel
+type StatItem = { stat: number; suffix: string; text: string; delay: number; lineDelay: number; id: string; popup: string; line: { x1: number; y1: number; x2: number; y2: number; }; isFloat?: boolean; };
+
 const StatsWheel = () => {
-  const leftStats = [
-    { stat: "25+", text: "Years of experience" },
-    { stat: "1M+", text: "Network of pre-vetted professionals" },
-    { stat: "24/7", text: "Personalized support" }
+  const [activeNode, setActiveNode] = useState<string | null>(null);
+
+  const leftStats: StatItem[] = [
+    { stat: 25, suffix: "+", text: "Years of experience", delay: 1.35, lineDelay: 1.25, id: 'tl', popup: 'Industry Veterans', line: { x1: 200, y1: 50, x2: 400, y2: 150 } },
+    { stat: 1, suffix: "M+", text: "Network of pre-vetted professionals", delay: 1.2, lineDelay: 1.1, id: 'ml', popup: 'Vast Talent Pool', line: { x1: 200, y1: 150, x2: 400, y2: 150 } },
+    { stat: 24, suffix: "/7", text: "Personalized support", delay: 1.05, lineDelay: 0.95, id: 'bl', popup: 'Always-On Assistance', line: { x1: 200, y1: 250, x2: 400, y2: 150 } }
   ];
   
-  const rightStats = [
-    { stat: "50", text: "State coverage" },
-    { stat: "4.4 ★", text: "Rating from clinicians on TrustPilot" },
-    { stat: "83%", text: "Faster credentialing" }
+  const rightStats: StatItem[] = [
+    { stat: 50, suffix: "", text: "State coverage", delay: 0.6, lineDelay: 0.5, id: 'tr', popup: 'National Network & Logistics', line: { x1: 600, y1: 50, x2: 400, y2: 150 } },
+    { stat: 4.4, isFloat: true, suffix: " ★", text: "Rating from clinicians on TrustPilot", delay: 0.75, lineDelay: 0.65, id: 'mr', popup: 'Clinician Trusted & Verified', line: { x1: 600, y1: 150, x2: 400, y2: 150 } },
+    { stat: 83, suffix: "%", text: "Faster credentialing", delay: 0.9, lineDelay: 0.8, id: 'br', popup: 'Streamlined Onboarding', line: { x1: 600, y1: 250, x2: 400, y2: 150 } }
   ];
 
+  const footerText = "At Argyle Staffing and Recruiting, we make healthcare hiring simple, strategic, and reliable. Our experienced recruiters connect healthcare organizations with highly qualified professionals who are ready to make an immediate impact, while helping clinicians discover career opportunities that align with their skills and goals. By combining industry expertise with personalized service, we deliver staffing solutions that save time, reduce hiring challenges, and support exceptional patient care. When hiring matters most, healthcare organizations trust Argyle to deliver the right talent with confidence.";
+  const footerWords = footerText.split(" ");
+  
+  const getVariantState = (id: string) => {
+    if (!activeNode) return "visible";
+    return activeNode === id ? "active" : "dimmed";
+  };
+
+  const activePopup = [...leftStats, ...rightStats].find(s => s.id === activeNode)?.popup;
+
   return (
-    <section className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24">
+    <motion.section 
+      className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <ParticleBackground speedMultiplier={activeNode ? 0.3 : 1} />
+      
       {/* Subtle Background Glows */}
       <div className="absolute left-0 top-0 h-[600px] w-[600px] max-w-full -translate-x-1/2 -translate-y-1/4 rounded-full bg-brand-primary-lt/30 blur-[120px] pointer-events-none"></div>
       <div className="absolute right-0 top-0 h-[600px] w-[600px] max-w-full translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
 
       <div className="relative z-10 mx-auto max-w-6xl text-center">
-        <h2 className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink lg:text-[2.5rem] animate-fade-up">
+        <motion.h2 variants={itemVariant} className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink lg:text-[2.5rem]">
           Precision Healthcare Staffing Nationwide
-        </h2>
+        </motion.h2>
 
         <div className="relative flex flex-col items-center justify-center gap-12 lg:flex-row lg:gap-8">
           
           {/* Connecting SVG Lines (Desktop Only) */}
-          <div 
-            className="absolute inset-0 hidden items-center justify-center lg:flex pointer-events-none z-0 animate-fade-up" 
-            style={{ animationDelay: '600ms' }}
-          >
-            <svg width="800" height="300" className="opacity-20 text-brand-ink">
-              {/* Left Lines */}
-              <line x1="200" y1="50" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="200" y1="150" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="200" y1="250" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
-              {/* Right Lines */}
-              <line x1="600" y1="50" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="600" y1="150" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="600" y1="250" x2="400" y2="150" stroke="currentColor" strokeWidth="1.5" />
+          <div className="absolute inset-0 hidden items-center justify-center lg:flex pointer-events-none z-0">
+            <svg width="800" height="300" className="text-brand-primary">
+              {[...leftStats, ...rightStats].map((item, i) => (
+                <motion.line 
+                  key={i}
+                  x1={item.line.x1} y1={item.line.y1} x2={item.line.x2} y2={item.line.y2} 
+                  stroke="currentColor" 
+                  strokeWidth="1.5"
+                  variants={lineDrawVariant}
+                  animate={getVariantState(item.id)}
+                  transition={{ delay: activeNode ? 0 : item.lineDelay, duration: activeNode ? 0.3 : 1 }}
+                />
+              ))}
             </svg>
           </div>
 
           {/* Left Column (Stats) */}
           <div className="relative z-10 flex w-full flex-col items-center gap-6 lg:w-1/3 lg:items-end lg:pr-8">
             {leftStats.map((item, i) => (
-              <div 
+              <motion.div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
-                style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
+                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm cursor-pointer"
+                variants={nodeDockVariant}
+                custom={{x: 0, y: 0}}
+                animate={getVariantState(item.id)}
+                transition={{ delay: activeNode ? 0 : item.delay }}
+                onMouseEnter={() => setActiveNode(item.id)}
+                onMouseLeave={() => setActiveNode(null)}
+                onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
                 <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                  {item.stat}
+                  <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
                 </div>
                 <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Center Hub */}
-          <div 
-            className="relative z-10 flex shrink-0 items-center justify-center animate-fade-up"
-            style={{ animationDelay: '300ms', animationFillMode: 'both' }}
+          <motion.div 
+            className="relative z-10 flex shrink-0 flex-col items-center justify-center"
+            variants={corePulseVariant}
           >
             {/* Concentric Precision Rings */}
             <div className="flex h-[180px] w-[180px] sm:h-[240px] sm:w-[240px] items-center justify-center rounded-full bg-[#D5F2F2] animate-[pulse_4s_ease-in-out_infinite]">
               <div className="flex h-[130px] w-[130px] sm:h-[180px] sm:w-[180px] items-center justify-center rounded-full bg-[#87E1DE]">
-                <div tabIndex={0} role="button" aria-label="Argyle Brand Emblem" className="group flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white shadow-md transition-all duration-500 hover:scale-110 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-                  {/* J Logo */}
+                <div tabIndex={0} role="button" aria-label="Argyle Brand Emblem" className="group flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white shadow-md transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(0,124,116,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                  {/* A Logo */}
                     <div className="relative flex items-center justify-center text-[2.5rem] sm:text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12">
                     <span className="absolute">A</span>
                     {/* Minimalist ring to mimic the stylized 'B' swirl */}
@@ -83,32 +171,63 @@ const StatsWheel = () => {
                 </div>
               </div>
             </div>
-          </div>
+            
+            {/* Dynamic Popup Detail below Core */}
+            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[240px] h-[40px] flex justify-center items-center pointer-events-none">
+              <AnimatePresence mode="wait">
+                {activePopup && (
+                  <motion.div
+                    key={activePopup}
+                    variants={detailPopupVariant}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className="whitespace-nowrap rounded-full bg-brand-ink px-4 py-2 text-sm font-bold text-white shadow-lg"
+                  >
+                    {activePopup}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
 
           {/* Right Column (Stats) */}
           <div className="relative z-10 flex w-full flex-col items-center gap-6 lg:w-1/3 lg:items-start lg:pl-8">
             {rightStats.map((item, i) => (
-              <div 
+              <motion.div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm transition-transform hover:scale-105 animate-fade-up"
-                style={{ animationDelay: `${(i + 3) * 150}ms`, animationFillMode: 'both' }}
+                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm cursor-pointer"
+                variants={nodeDockVariant}
+                custom={{x: 0, y: 0}}
+                animate={getVariantState(item.id)}
+                transition={{ delay: activeNode ? 0 : item.delay }}
+                onMouseEnter={() => setActiveNode(item.id)}
+                onMouseLeave={() => setActiveNode(null)}
+                onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
                 <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                  {item.stat}
+                  <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
                 </div>
                 <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
         </div>
 
-        {/* Footer Text */}
-        <p className="mx-auto mt-10 sm:mt-20 max-w-3xl font-sans text-sm sm:text-[1.05rem] leading-relaxed text-slate-600">
-          At Argyle Staffing and Recruiting, we make healthcare hiring simple, strategic, and reliable. Our experienced recruiters connect healthcare organizations with highly qualified professionals who are ready to make an immediate impact, while helping clinicians discover career opportunities that align with their skills and goals. By combining industry expertise with personalized service, we deliver staffing solutions that save time, reduce hiring challenges, and support exceptional patient care. When hiring matters most, healthcare organizations trust Argyle to deliver the right talent with confidence.
-        </p>
+        {/* Footer Text Staggered */}
+        <motion.p 
+          className="mx-auto mt-16 sm:mt-24 max-w-3xl font-sans text-sm sm:text-[1.05rem] leading-relaxed text-slate-600"
+          variants={visContainerVariant}
+        >
+          {footerWords.map((word, index) => (
+            <motion.span key={index} variants={wordVariant} className="inline-block mr-[0.25em]">
+              {word}
+            </motion.span>
+          ))}
+        </motion.p>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
