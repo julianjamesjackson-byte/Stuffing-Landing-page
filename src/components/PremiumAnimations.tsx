@@ -10,6 +10,14 @@ export const LinearGlowCard = ({ children, className = "" }: { children: React.R
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  const backgroundGlow = useMotionTemplate`
+    radial-gradient(
+      400px circle at ${mouseX}px ${mouseY}px,
+      rgba(255,255,255,0.08),
+      transparent 80%
+    )
+  `;
+
   function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
     if (isMobile) return;
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -30,13 +38,7 @@ export const LinearGlowCard = ({ children, className = "" }: { children: React.R
         <motion.div
           className="pointer-events-none absolute -inset-px z-0 rounded-[inherit] transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           style={{
-            background: useMotionTemplate`
-              radial-gradient(
-                400px circle at ${mouseX}px ${mouseY}px,
-                rgba(255,255,255,0.08),
-                transparent 80%
-              )
-            `,
+            background: backgroundGlow,
           }}
         />
       )}
@@ -62,6 +64,8 @@ export const StripeTilt = ({ children, className = "" }: { children: React.React
   
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], isMobile ? ["0%", "0%"] : ["100%", "-100%"]);
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], isMobile ? ["0%", "0%"] : ["100%", "-100%"]);
+
+  const glareGlow = useMotionTemplate`linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%)`;
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isMobile || !ref.current) return;
@@ -93,7 +97,7 @@ export const StripeTilt = ({ children, className = "" }: { children: React.React
       <motion.div
         className={`pointer-events-none absolute inset-0 z-20 rounded-[inherit] transition-opacity duration-300 mix-blend-overlay ${isMobile ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}
         style={{
-          background: useMotionTemplate`linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%)`,
+          background: glareGlow,
           x: glareX,
           y: glareY
         }}
