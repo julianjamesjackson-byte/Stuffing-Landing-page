@@ -224,3 +224,30 @@ export const gridItemVariant: Variants = {
   exit: (isMobile?: boolean) => ({ opacity: 0, y: isMobile ? 10 : 30, transition: { duration: 0.2 } })
 };
 
+export const maskedTextVariant: Variants = {
+  hidden: { y: "100%" },
+  visible: { 
+    y: "0%", 
+    transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+  },
+  exit: { y: "100%", transition: { duration: 0.2 } }
+};
+
+export const cinematicBgVariant: Variants = {
+  hidden: { scale: 1.15 },
+  visible: { 
+    scale: 1,
+    transition: { duration: 1.5, ease: "easeOut" }
+  },
+  exit: { scale: 1.15, transition: { duration: 0.2 } }
+};
+
+export const cardVariant: Variants = {
+  hidden: (isMobile?: boolean) => ({ opacity: 0, y: isMobile ? 15 : 40 }),
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
+  exit: (isMobile?: boolean) => ({ opacity: 0, y: isMobile ? 15 : 40, transition: { duration: 0.2 } })
+};

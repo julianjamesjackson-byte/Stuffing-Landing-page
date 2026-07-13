@@ -18,7 +18,10 @@ import {
   timelineLineVariant,
   mapContainerVariant,
   gridItemVariant,
-  visContainerVariant as gridContainerVariant
+  visContainerVariant as gridContainerVariant,
+  maskedTextVariant,
+  cinematicBgVariant,
+  cardVariant
 } from './animations';
 
 // Section 2: Stats Badge Wheel
@@ -664,6 +667,7 @@ const Specialties = () => {
 // Section 7: Facility Value Propositions (Navy Section)
 // Section 7: Facility Value Propositions (Navy Section)
 const FacilityProps = () => {
+  const isMobile = useIsMobile();
   const cards = [
     {
       title: "Lower Administrative Load",
@@ -701,31 +705,82 @@ const FacilityProps = () => {
     <section id="facilities" className="bg-[#0A2540] py-16 px-4 sm:py-32 lg:px-12 text-white">
       <div className="mx-auto max-w-7xl">
         {/* Header Text */}
-        <div className="text-center mb-10 sm:mb-20">
-          <h2 className="mb-6 font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]">
-            Strategic healthcare staffing for facilities<br className="hidden md:block" />
-            {' '}that need reliable coverage in critical roles
-          </h2>
-          <p className="mx-auto max-w-2xl text-sm sm:text-[16px] leading-relaxed text-slate-300 text-center">
-            Argyle Medical Staffing provides comprehensive staffing solutions for hospitals, health systems, and healthcare organizations facing urgent gaps in coverage - coast-to-coast. From rural clinics to major health systems, we move quickly, match thoughtfully, and stay accountable from first call through start date.
-          </p>
-          <div className="mt-10">
-            <Link to="/request-talent" className="inline-flex items-center justify-center rounded-full bg-brand-primary px-10 py-4 font-bold text-white transition-all hover:-translate-y-1 hover:bg-brand-primary-dk hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-              Request Talent
-            </Link>
+        {/* Header Text */}
+        <motion.div 
+          className="text-center mb-10 sm:mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.2 } },
+            exit: { transition: { duration: 0.2 } }
+          }}
+        >
+          <div className="overflow-hidden pb-4 mb-2">
+            <motion.h2 
+              variants={maskedTextVariant}
+              className="font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]"
+            >
+              Strategic healthcare staffing for facilities<br className="hidden md:block" />
+              {' '}that need reliable coverage in critical roles
+            </motion.h2>
           </div>
-        </div>
+          <motion.p variants={itemVariant} custom={isMobile} className="mx-auto max-w-2xl text-sm sm:text-[16px] leading-relaxed text-slate-300 text-center mb-10">
+            Argyle Medical Staffing provides comprehensive staffing solutions for hospitals, health systems, and healthcare organizations facing urgent gaps in coverage - coast-to-coast. From rural clinics to major health systems, we move quickly, match thoughtfully, and stay accountable from first call through start date.
+          </motion.p>
+          <motion.div variants={itemVariant} custom={isMobile} className="relative inline-block mt-4">
+            {/* Infinite breathing glow */}
+            <motion.div 
+              animate={{ opacity: [0.3, 0.8, 0.3] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="absolute inset-0 bg-brand-primary blur-[20px] rounded-full z-0"
+            ></motion.div>
+            <motion.div className="relative z-10" whileHover={{ scale: 1.05 }}>
+              <Link to="/request-talent" className="inline-flex items-center justify-center rounded-full bg-brand-primary px-10 py-4 font-bold text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                Request Talent
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: isMobile ? 0.05 : 0.15 } },
+            exit: { transition: { duration: 0.2 } }
+          }}
+          custom={isMobile}
+        >
           {/* Cards (2 Columns) */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {cards.map((card, i) => (
-              <div key={i} className="flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors hover:bg-[#133A63]">
+              <motion.div 
+                key={i} 
+                variants={cardVariant}
+                custom={isMobile}
+                whileHover={{ y: -5, backgroundColor: "#133A63", borderColor: "#276296" }}
+                className="group flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors"
+              >
                 <div className="flex-shrink-0">
-                  <svg className="h-8 w-8 sm:h-10 sm:w-10 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    {card.icon}
-                  </svg>
+                  <motion.div
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
+                  >
+                    <motion.svg 
+                      className="h-8 w-8 sm:h-10 sm:w-10 text-teal-300 transition-transform duration-300 group-hover:scale-110" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor"
+                    >
+                      {card.icon}
+                    </motion.svg>
+                  </motion.div>
                 </div>
                 <div>
                   <h3 className="mb-2 text-[14px] sm:text-[16px] font-bold text-white leading-tight">
@@ -735,60 +790,98 @@ const FacilityProps = () => {
                     {card.desc}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Large Image (1 Column) */}
-          <div className="lg:col-span-1 min-h-[250px] sm:min-h-[400px] lg:min-h-full relative rounded-none overflow-hidden shadow-2xl">
-            <img 
+          <motion.div 
+            variants={{
+              hidden: { filter: "blur(15px)", opacity: 0 },
+              visible: { filter: "blur(0px)", opacity: 1, transition: { duration: 1.2, ease: "easeOut" } },
+              exit: { filter: "blur(15px)", opacity: 0, transition: { duration: 0.2 } }
+            }}
+            className="lg:col-span-1 min-h-[250px] sm:min-h-[400px] lg:min-h-full relative rounded-none overflow-hidden shadow-2xl"
+          >
+            <motion.img 
               src={facilityMeeting} 
               alt="Facility Meeting" 
+              animate={{ scale: [1, 1.015, 1] }}
+              transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
               className="absolute inset-0 h-full w-full object-cover"
             />
             {/* Teal Overlay Mix Blend */}
             <div className="absolute inset-0 bg-brand-primary/50 mix-blend-multiply"></div>
             <div className="absolute inset-0 bg-brand-primary/20"></div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 // Section 8: Find Jobs Banner
-const FindJobs = () => (
-  <section id="clinicians" className="relative overflow-hidden bg-[#0A2540] py-16 sm:py-32 lg:py-40">
-    {/* Wide Background Image */}
-    <div className="absolute inset-0 z-0">
-      <img 
-        src={collage1} 
-        alt="Locum Professional" 
-        className="h-full w-full object-cover object-[center_30%]"
-      />
-      {/* Gradient overlay to ensure text readability on the right side */}
-      <div className="absolute inset-0 bg-[#0A2540]/80"></div>
-    </div>
-    
-    {/* Content Container pushed to the right */}
-    <div className="relative z-10 mx-auto flex max-w-7xl justify-end px-4 sm:px-8 lg:px-12">
-      <div className="w-full lg:w-1/2 flex flex-col justify-center py-10">
-        <h2 className="mb-4 font-display text-2xl sm:text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem]">
-          Find healthcare opportunities<br className="hidden md:block" />
-          {' '}that fit how you want to practice
-        </h2>
-        <p className="mb-8 sm:mb-10 text-sm sm:text-[18px] text-white/90 font-medium">
-          Whether you are looking for permanent placement, contract roles, or flexible shifts, your next rewarding role starts here.
-        </p>
-        <div>
-          <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-10 py-3.5 text-[15px] font-bold tracking-wide text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-            Explore Careers
-          </Link>
-        </div>
+const FindJobs = () => {
+  const isMobile = useIsMobile();
+  return (
+    <motion.section 
+      id="clinicians" 
+      className="relative overflow-hidden bg-[#0A2540] py-16 sm:py-32 lg:py-40"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.25 }}
+    >
+      {/* Wide Background Image */}
+      <div className="absolute inset-0 z-0">
+        <motion.img 
+          src={collage1} 
+          alt="Locum Professional" 
+          variants={cinematicBgVariant}
+          animate={isMobile ? undefined : { scale: [1, 1.05, 1], x: [0, -10, 0] }}
+          transition={{
+            scale: { repeat: Infinity, duration: 20, ease: "linear", delay: 1.5 },
+            x: { repeat: Infinity, duration: 20, ease: "linear", delay: 1.5 }
+          }}
+          className="h-full w-full object-cover object-[center_30%]"
+        />
+        {/* Gradient overlay to ensure text readability on the right side */}
+        <div className="absolute inset-0 bg-[#0A2540]/80"></div>
       </div>
-    </div>
-  </section>
-);
+      
+      {/* Content Container pushed to the right */}
+      <div className="relative z-10 mx-auto flex max-w-7xl justify-end px-4 sm:px-8 lg:px-12">
+        <motion.div 
+          className="w-full lg:w-1/2 flex flex-col justify-center py-10"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: isMobile ? 0.05 : 0.2, delayChildren: 0.5 } },
+            exit: { transition: { duration: 0.2 } }
+          }}
+        >
+          <div className="overflow-hidden pb-4 mb-2">
+            <motion.h2 
+              variants={maskedTextVariant}
+              className="font-display text-2xl sm:text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem]"
+            >
+              Find healthcare opportunities<br className="hidden md:block" />
+              {' '}that fit how you want to practice
+            </motion.h2>
+          </div>
+          <motion.p variants={itemVariant} custom={isMobile} className="mb-8 sm:mb-10 text-sm sm:text-[18px] text-white/90 font-medium">
+            Whether you are looking for permanent placement, contract roles, or flexible shifts, your next rewarding role starts here.
+          </motion.p>
+          <motion.div variants={itemVariant} custom={isMobile}>
+            <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
+              <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-10 py-3.5 text-[15px] font-bold tracking-wide text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                Explore Careers
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+};
 
 // Section 9: Footer
 const Footer = () => {
