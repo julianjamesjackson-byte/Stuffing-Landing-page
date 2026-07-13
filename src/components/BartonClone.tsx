@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, animate, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useTransform, useSpring, animate, useInView, AnimatePresence, useMotionValue } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import USMapGraphic from './USMapGraphic';
 import facilityMeeting from '../assets/facility_meeting.png';
@@ -242,40 +242,63 @@ const COLLAGE_IMAGES = [
 const FloatingCollageSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Scroll-linked smooth parallax
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 30, restDelta: 0.001 });
+  // 1. 3D Mouse Parallax
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  // Left images drift up, right images drift down
-  const yLeft = useTransform(smoothProgress, [0, 1], [60, -60]);
-  const yRight = useTransform(smoothProgress, [0, 1], [-60, 60]);
-  const parallaxMap = [yLeft, yRight, yLeft, yRight];
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (typeof window === 'undefined') return;
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    const x = (clientX / innerWidth) * 2 - 1;
+    const y = (clientY / innerHeight) * 2 - 1;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const smoothX = useSpring(mouseX, { stiffness: 40, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 40, damping: 20 });
+
+  const rotateX = useTransform(smoothY, [-1, 1], [10, -10]);
+  const rotateY = useTransform(smoothX, [-1, 1], [-10, 10]);
+  const moveX = useTransform(smoothX, [-1, 1], [-20, 20]);
+  const moveY = useTransform(smoothY, [-1, 1], [-20, 20]);
 
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
+        staggerChildren: 0.2,
       },
     },
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, y: 48, scale: 0.95 },
+  const cinematicImageVariants = {
+    hidden: { opacity: 0, scale: 0.8, filter: 'blur(20px)', y: 100 },
     visible: {
       opacity: 1,
-      y: 0,
       scale: 1,
-      transition: { duration: 1, ease: [0, 0, 0.2, 1] as const },
+      filter: 'blur(0px)',
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 60, damping: 15 },
     },
   };
 
+  const maskTextVariant = {
+    hidden: { y: "100%" },
+    visible: { 
+      y: "0%",
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as const }
+    }
+  };
+
   return (
-    <section id="about" ref={sectionRef} className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24">
+    <section 
+      id="about" 
+      ref={sectionRef} 
+      onMouseMove={handleMouseMove}
+      className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24 [perspective:2000px]"
+    >
       {/* Background Ambient Glows */}
       <div className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></div>
       <div className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></div>
@@ -286,48 +309,83 @@ const FloatingCollageSection = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.15 }}
+        viewport={{ once: true, amount: 0.15 }}
       >
-        <div className="relative w-full h-full max-w-[1400px] mx-auto">
+        <div className="relative w-full h-full max-w-[1400px] mx-auto [transform-style:preserve-3d]">
           {COLLAGE_IMAGES.map((img, i) => (
-            <motion.img
+            <motion.div
               key={i}
-              variants={imageVariants}
-              style={{ y: parallaxMap[i] }}
-              src={img.src}
-              alt={img.alt}
-              className={`absolute ${img.pos} w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105`}
-            />
+              className={`absolute ${img.pos}`}
+              variants={cinematicImageVariants}
+              style={{ 
+                x: moveX, 
+                y: moveY, 
+                rotateX, 
+                rotateY,
+                transformStyle: "preserve-3d"
+              }}
+            >
+              <div className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded-3xl">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-brand-primary/20"
+                />
+              </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
 
       {/* Center Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1, ease: [0, 0, 0.2, 1] }}
-        className="relative z-10 mx-auto flex max-w-2xl flex-col items-center justify-center text-center px-4"
-      >
-        <h2 className="mb-6 font-display text-2xl sm:text-4xl font-medium tracking-tight text-[#0A2540] md:text-5xl lg:text-[3.5rem] leading-[1.1]">
-          More control over your healthcare career.<br />
-          <span className="font-bold">Less friction getting there.</span>
-        </h2>
-        
-        <p className="mb-10 text-base md:text-[17px] leading-relaxed text-[#0A2540]/80">
-          We bring you opportunities worth saying yes to. Whether you are seeking permanent placement, contract roles, or flexible per diem shifts, Argyle Staffing and Recruiting coordinates the details. We streamline credentialing, licensing, and onboarding so physicians, nurses, and allied health professionals can find balance, career growth, and high earning potential in rewarding environments.
-        </p>
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center justify-center text-center px-4">
+        <motion.div 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ staggerChildren: 0.2 }}
+          className="w-full flex flex-col items-center justify-center"
+        >
+          {/* Masked Text Reveal with ample padding for descenders */}
+          <div className="overflow-hidden pb-4 w-full">
+            <motion.h2 
+              variants={maskTextVariant}
+              className="mb-2 font-display text-2xl sm:text-4xl font-medium tracking-tight text-[#0A2540] md:text-5xl lg:text-[3.5rem] leading-[1.1] relative overflow-hidden group"
+            >
+              More control over your healthcare career.<br />
+              <span className="font-bold">Less friction getting there.</span>
+              
+              {/* Sweeping Shine Overlay */}
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none animate-[sweep_2s_ease-in-out_2s]" />
+            </motion.h2>
+          </div>
+          
+          <div className="overflow-hidden pb-4 w-full">
+            <motion.p 
+              variants={maskTextVariant}
+              className="mb-6 text-base md:text-[17px] leading-relaxed text-[#0A2540]/80 relative group"
+            >
+              We bring you opportunities worth saying yes to. Whether you are seeking permanent placement, contract roles, or flexible per diem shifts, Argyle Staffing and Recruiting coordinates the details. We streamline credentialing, licensing, and onboarding so physicians, nurses, and allied health professionals can find balance, career growth, and high earning potential in rewarding environments.
+            </motion.p>
+          </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center pointer-events-auto">
-          <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-brand-primary-dk hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-            Explore Careers
-          </Link>
-          <Link to="/request-talent" className="inline-flex items-center justify-center rounded border-2 border-brand-primary bg-white px-8 py-3.5 text-sm font-bold text-brand-primary transition-all hover:bg-slate-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-            Request Talent
-          </Link>
-        </div>
-      </motion.div>
+          <motion.div 
+            variants={maskTextVariant}
+            className="flex flex-col sm:flex-row gap-4 items-center justify-center pointer-events-auto mt-4"
+          >
+            <motion.div whileHover={{ scale: 1.05, y: -4, boxShadow: "0px 10px 20px rgba(0, 119, 119, 0.3)" }} whileTap={{ scale: 0.95 }}>
+              <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-8 py-3.5 text-sm font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                Explore Careers
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05, y: -4, boxShadow: "0px 10px 20px rgba(0, 119, 119, 0.1)" }} whileTap={{ scale: 0.95 }}>
+              <Link to="/request-talent" className="inline-flex items-center justify-center rounded border-2 border-brand-primary bg-white px-8 py-3.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                Request Talent
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };
