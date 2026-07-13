@@ -90,13 +90,18 @@ export default function ClinicianRegistrationForm() {
       });
 
       if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("Webhook not found. Please ensure n8n HTTP Method is POST and 'Listen for test event' is clicked.");
+        }
         throw new Error(`Server returned status ${response.status}`);
       }
       setStatus('success');
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission error:", error);
       setStatus('error');
-      setErrorMessage("Submission failed. If your website is served over HTTPS, please ensure your n8n webhook URL is also HTTPS (Mixed Content restriction).");
+      setErrorMessage(error.message === "Failed to fetch" 
+        ? "Network error (Failed to fetch). Ensure n8n is active." 
+        : error.message || "An unknown error occurred.");
     }
   };
 
