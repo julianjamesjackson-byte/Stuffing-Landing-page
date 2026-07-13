@@ -184,3 +184,11 @@
   background: var(--color-brand-rule);
   margin: 0 1.25rem;
 }
+
+/* Global focus styles for forms */
+input:focus, select:focus, textarea:focus {
+  border-color: #007C74; /* Using --color-brand-primary from above, teal */
+  box-shadow: 0 0 5px rgba(0, 124, 116, 0.4);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
