@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @source "./**/*.{ts,tsx}";
 @source "../index.html";
+@custom-variant dark (&:where(.dark, .dark *));
 /* Fonts loaded via <link> in index.html: Bricolage Grotesque (display) + DM Sans (body) */
 
 

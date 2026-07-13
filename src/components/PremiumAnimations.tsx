@@ -57,11 +57,11 @@ export const StripeTilt = ({ children, className = "" }: { children: React.React
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], isMobile ? ["0deg", "0deg"] : ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], isMobile ? ["0deg", "0deg"] : ["-5deg", "5deg"]);
   
-  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["100%", "-100%"]);
-  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["100%", "-100%"]);
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], isMobile ? ["0%", "0%"] : ["100%", "-100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], isMobile ? ["0%", "0%"] : ["100%", "-100%"]);
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isMobile || !ref.current) return;
@@ -86,20 +86,18 @@ export const StripeTilt = ({ children, className = "" }: { children: React.React
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={isMobile ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}
+      style={{ rotateX, rotateY, transformStyle: isMobile ? "flat" : "preserve-3d" }}
       className={`relative ${className}`}
     >
       {children}
-      {!isMobile && (
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] transition-opacity duration-300 opacity-0 group-hover:opacity-100 mix-blend-overlay"
-          style={{
-            background: useMotionTemplate`linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%)`,
-            x: glareX,
-            y: glareY
-          }}
-        />
-      )}
+      <motion.div
+        className={`pointer-events-none absolute inset-0 z-20 rounded-[inherit] transition-opacity duration-300 mix-blend-overlay ${isMobile ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}
+        style={{
+          background: useMotionTemplate`linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%)`,
+          x: glareX,
+          y: glareY
+        }}
+      />
     </motion.div>
   );
 };
@@ -121,12 +119,21 @@ export const AppleTextReveal = ({ text, className = "" }: { text: React.ReactNod
   };
 
   const child = {
-    hidden: isMobile 
-      ? { opacity: 0, y: 10 }
-      : { opacity: 0, rotateX: 90, y: 30, filter: 'blur(10px)' },
-    visible: isMobile
-      ? { opacity: 1, y: 0, transition: { duration: 0.4 } }
-      : { opacity: 1, rotateX: 0, y: 0, filter: 'blur(0px)', transition: { type: "spring" as any, stiffness: 150, damping: 15 } }
+    hidden: { 
+      opacity: 0, 
+      rotateX: isMobile ? 0 : 90, 
+      y: isMobile ? 10 : 30, 
+      filter: isMobile ? 'blur(0px)' : 'blur(10px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      rotateX: 0, 
+      y: 0, 
+      filter: 'blur(0px)', 
+      transition: isMobile 
+        ? { duration: 0.4 } 
+        : { type: "spring" as any, stiffness: 150, damping: 15 } 
+    }
   } as any;
 
   return (

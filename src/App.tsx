@@ -15,17 +15,21 @@ function LandingPage() {
   );
 }
 
+import { ThemeProvider } from './components/ThemeProvider';
+
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/request-talent" element={<FacilityIntakePage />} />
-        <Route path="/explore-careers" element={<ClinicianRegistrationPage />} />
-        <Route path="/partner-with-us" element={<PartnerRegistrationPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/request-talent" element={<FacilityIntakePage />} />
+          <Route path="/explore-careers" element={<ClinicianRegistrationPage />} />
+          <Route path="/partner-with-us" element={<PartnerRegistrationPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

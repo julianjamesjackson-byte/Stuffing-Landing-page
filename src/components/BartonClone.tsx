@@ -106,7 +106,7 @@ const StatsWheel = () => {
 
   return (
     <motion.section 
-      className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24"
+      className="relative overflow-hidden bg-white dark:bg-slate-900 py-16 px-4 sm:py-24 sm:px-8 lg:px-24 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.25 }}
@@ -118,7 +118,7 @@ const StatsWheel = () => {
       <div className="absolute right-0 top-0 h-[600px] w-[600px] max-w-full translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
 
       <div className="relative z-10 mx-auto max-w-6xl text-center">
-        <motion.h2 variants={itemVariant} className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink lg:text-[2.5rem]">
+        <motion.h2 variants={itemVariant} className="mb-10 sm:mb-20 font-display text-2xl sm:text-3xl font-bold text-brand-ink dark:text-white lg:text-[2.5rem]">
           Precision Healthcare Staffing Nationwide
         </motion.h2>
 
@@ -155,11 +155,11 @@ const StatsWheel = () => {
                 onMouseLeave={() => setActiveNode(null)}
                 onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
-                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm">
+                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1.5 pr-4 sm:pr-6 shadow-sm">
                   <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
                     <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
                   </div>
-                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90 dark:text-slate-300">{item.text}</span>
                 </LinearGlowCard>
               </motion.div>
             ))}
@@ -171,16 +171,16 @@ const StatsWheel = () => {
             variants={corePulseVariant}
           >
             {/* Concentric Precision Rings */}
-            <div className="flex h-[180px] w-[180px] sm:h-[240px] sm:w-[240px] items-center justify-center rounded-full bg-[#D5F2F2] animate-[pulse_4s_ease-in-out_infinite]">
-              <div className="flex h-[130px] w-[130px] sm:h-[180px] sm:w-[180px] items-center justify-center rounded-full bg-[#87E1DE]">
-                <div tabIndex={0} role="button" aria-label="Argyle Brand Emblem" className="group flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white shadow-md transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(0,124,116,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+            <div className="flex h-[180px] w-[180px] sm:h-[240px] sm:w-[240px] items-center justify-center rounded-full bg-[#D5F2F2]/50 dark:bg-slate-800 animate-[pulse_4s_ease-in-out_infinite]">
+              <div className="flex h-[130px] w-[130px] sm:h-[180px] sm:w-[180px] items-center justify-center rounded-full bg-[#87E1DE] dark:bg-brand-primary/20">
+                <LinearGlowCard className="relative z-10 flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white dark:bg-slate-900 shadow-md transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(0,124,116,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 group">
                   {/* A Logo */}
                     <div className="relative flex items-center justify-center text-[2.5rem] sm:text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12">
                     <span className="absolute">A</span>
                     {/* Minimalist ring to mimic the stylized 'B' swirl */}
                     <div className="absolute h-[50px] w-[50px] sm:h-[72px] sm:w-[72px] rounded-full border-[4px] sm:border-[6px] border-transparent border-b-brand-primary border-l-brand-primary -rotate-45 transition-transform duration-700 group-hover:rotate-[135deg]"></div>
                   </div>
-                </div>
+                </LinearGlowCard>
               </div>
             </div>
             
@@ -194,7 +194,7 @@ const StatsWheel = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="whitespace-nowrap rounded-full bg-brand-ink px-4 py-2 text-sm font-bold text-white shadow-lg"
+                    className="whitespace-nowrap rounded-full bg-brand-ink dark:bg-brand-primary px-4 py-2 text-sm font-bold text-white shadow-lg"
                   >
                     {activePopup}
                   </motion.div>
@@ -217,11 +217,11 @@ const StatsWheel = () => {
                 onMouseLeave={() => setActiveNode(null)}
                 onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
-                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm">
+                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1.5 pr-4 sm:pr-6 shadow-sm">
                   <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
                     <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
                   </div>
-                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90 dark:text-slate-300">{item.text}</span>
                 </LinearGlowCard>
               </motion.div>
             ))}
@@ -231,7 +231,7 @@ const StatsWheel = () => {
 
         {/* Footer Text Staggered */}
         <motion.p 
-          className="mx-auto mt-16 sm:mt-24 max-w-3xl font-sans text-sm sm:text-[1.05rem] leading-relaxed text-slate-600"
+          className="mx-auto mt-16 sm:mt-24 max-w-3xl font-sans text-sm sm:text-[1.05rem] leading-relaxed text-slate-600 dark:text-slate-400"
           variants={visContainerVariant}
         >
           {footerWords.map((word, index) => (
@@ -320,11 +320,11 @@ const FloatingCollageSection = () => {
       id="about" 
       ref={sectionRef} 
       onMouseMove={handleMouseMove}
-      className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24 [perspective:2000px]"
+      className="relative overflow-hidden bg-[#F8FAFC] dark:bg-slate-950 py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24 [perspective:2000px] transition-colors duration-300"
     >
       {/* Background Ambient Glows */}
-      <motion.div style={{ y: bgY1 }} className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></motion.div>
-      <motion.div style={{ y: bgY2 }} className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></motion.div>
+      <motion.div style={{ y: bgY1 }} className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 dark:bg-brand-primary/5 blur-[120px] pointer-events-none"></motion.div>
+      <motion.div style={{ y: bgY2 }} className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 dark:bg-brand-primary/10 blur-[120px] pointer-events-none"></motion.div>
 
       {/* Floating Images — 4 Corner Frame */}
       <motion.div
@@ -356,7 +356,7 @@ const FloatingCollageSection = () => {
                   alt={img.alt}
                   animate={{ y: [0, 15, 0] }}
                   transition={{ repeat: Infinity, duration: 6 + i, ease: "easeInOut", delay: i * 0.5 }}
-                  className="w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-brand-primary/20"
+                  className="w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 dark:border-slate-800 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-brand-primary/20"
                 />
               </div>
             </motion.div>
@@ -381,7 +381,7 @@ const FloatingCollageSection = () => {
           <div className="overflow-hidden pb-4 w-full">
             <motion.h2 
               variants={maskTextVariant}
-              className="mb-2 font-display text-2xl sm:text-4xl font-medium tracking-tight text-[#0A2540] md:text-5xl lg:text-[3.5rem] leading-[1.1] relative overflow-hidden group"
+              className="mb-2 font-display text-2xl sm:text-4xl font-medium tracking-tight text-[#0A2540] dark:text-white md:text-5xl lg:text-[3.5rem] leading-[1.1] relative overflow-hidden group"
             >
               More control over your healthcare career.<br />
               <span className="font-bold">Less friction getting there.</span>
@@ -394,7 +394,7 @@ const FloatingCollageSection = () => {
           <div className="overflow-hidden pb-4 w-full">
             <motion.p 
               variants={maskTextVariant}
-              className="mb-6 text-base md:text-[17px] leading-relaxed text-[#0A2540]/80 relative group"
+              className="mb-6 text-base md:text-[17px] leading-relaxed text-[#0A2540]/80 dark:text-slate-400 relative group"
             >
               We bring you opportunities worth saying yes to. Whether you are seeking permanent placement, contract roles, or flexible per diem shifts, Argyle Staffing and Recruiting coordinates the details. We streamline credentialing, licensing, and onboarding so physicians, nurses, and allied health professionals can find balance, career growth, and high earning potential in rewarding environments.
             </motion.p>
@@ -410,7 +410,7 @@ const FloatingCollageSection = () => {
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05, y: -4, boxShadow: "0px 10px 20px rgba(0, 119, 119, 0.1)" }} whileTap={{ scale: 0.95 }}>
-              <Link to="/request-talent" className="inline-flex items-center justify-center rounded border-2 border-brand-primary bg-white px-8 py-3.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+              <Link to="/request-talent" className="inline-flex items-center justify-center rounded border-2 border-brand-primary bg-white dark:bg-slate-900 dark:border-brand-primary/50 px-8 py-3.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
                 Request Talent
               </Link>
             </motion.div>
@@ -427,39 +427,33 @@ const Timeline = () => {
   const steps = [
     {
       title: "Recruiter\nReview",
-      // Puzzle piece
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2a3 3 0 0 0-3 3v1H7a3 3 0 0 0-3 3v2h1a3 3 0 0 1 0 6h-1v2a3 3 0 0 0 3 3h2v-1a3 3 0 0 1 6 0v1h2a3 3 0 0 0 3-3v-2h-1a3 3 0 0 1 0-6h1V8a3 3 0 0 0-3-3h-2V5a3 3 0 0 0-3-3Z" />
     },
     {
       title: "Credential\nVerification",
-      // Clipboard check
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
     },
     {
       title: "Job\nMatching",
-      // Plane
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 3.5L7 13.5l-3.5-.5L2 14.5l3.5 3.5L9 22l1.5-1.5-.5-3.5 2-2 3.5 6l1.2-.7c.4-.2.7-.6.6-1.1z" />
     },
     {
       title: "Interview\nCoordination",
-      // Document
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 2v6h6M16 13H8M16 17H8M10 9H8" />
     },
     {
       title: "Offer &\nOnboarding",
-      // Banknote
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2 7v10c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
     },
     {
       title: "Ongoing\nSupport",
-      // Headset
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
     }
   ];
 
   return (
     <motion.section 
-      className="bg-white py-16 px-4 sm:py-32 lg:px-12"
+      className="bg-white dark:bg-slate-900 py-16 px-4 sm:py-32 lg:px-12 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.25 }}
@@ -468,7 +462,7 @@ const Timeline = () => {
     >
       <div className="mx-auto max-w-6xl text-center">
         {/* Header Text */}
-        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] lg:text-[2.5rem]">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] dark:text-slate-100 lg:text-[2.5rem]">
           With Argyle Medical Staffing, you're not walking<br className="hidden md:block" />
           {' '}into your next role alone.<br className="hidden md:block" />
           {' '}Let us handle the details so you can focus on what you do best.
@@ -493,7 +487,7 @@ const Timeline = () => {
           </motion.svg>
           
           {/* Start Label */}
-          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white pb-6 md:pb-0 md:pr-4 font-sans text-[15px] font-medium text-[#3A4B5C]">
+          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white dark:bg-slate-900 pb-6 md:pb-0 md:pr-4 font-sans text-[15px] font-medium text-[#3A4B5C] dark:text-slate-400">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-brand-primary"></div>
               You
@@ -503,12 +497,12 @@ const Timeline = () => {
           {/* Icons Flex Container */}
           <div className="relative z-10 flex flex-col md:flex-row flex-1 items-center justify-around gap-8 md:gap-0 px-4 lg:px-8 py-4 md:py-0">
             {steps.map((step, i) => (
-              <motion.div variants={timelineItemVariant} key={i} className="flex flex-col items-center group bg-white md:bg-transparent py-2 md:py-0 px-2 md:px-0">
+              <motion.div variants={timelineItemVariant} key={i} className="flex flex-col items-center group bg-white dark:bg-slate-900 md:bg-transparent py-2 md:py-0 px-2 md:px-0">
                 <LinearGlowCard className="mb-4 rounded-full">
                   <MagneticButton>
                     <motion.div 
                       whileHover={{ scale: 1.05, boxShadow: "0px 8px 24px rgba(0, 124, 116, 0.25)" }}
-                      className="flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-[#E0F8F8] shadow-sm transition-colors duration-300"
+                      className="flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white dark:border-slate-800 bg-[#E0F8F8] dark:bg-slate-800 shadow-sm transition-colors duration-300"
                     >
                       <svg className="h-8 w-8 md:h-10 md:w-10 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         {step.icon}
@@ -516,7 +510,7 @@ const Timeline = () => {
                     </motion.div>
                   </MagneticButton>
                 </LinearGlowCard>
-                <h3 className="whitespace-pre-line text-center text-[14px] md:text-[15px] font-bold leading-tight text-slate-900">
+                <h3 className="whitespace-pre-line text-center text-[14px] md:text-[15px] font-bold leading-tight text-slate-900 dark:text-white">
                   {step.title}
                 </h3>
               </motion.div>
@@ -524,7 +518,7 @@ const Timeline = () => {
           </div>
 
           {/* End Label */}
-          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white pt-6 md:pt-0 md:pl-4 font-sans text-[15px] font-medium text-[#3A4B5C] text-center md:text-right">
+          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white dark:bg-slate-900 pt-6 md:pt-0 md:pl-4 font-sans text-[15px] font-medium text-[#3A4B5C] dark:text-slate-400 text-center md:text-right">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <span>Your Next<br className="hidden md:block" /> Role</span>
               <div className="h-1.5 w-1.5 rounded-full bg-brand-primary"></div>
@@ -541,16 +535,16 @@ const USMap = () => {
   const isMobile = useIsMobile();
   return (
     <motion.section 
-      className="bg-slate-50 py-24"
+      className="bg-slate-50 dark:bg-slate-950 py-24 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.25 }}
     >
       <div className="flex flex-col items-center text-center px-8 lg:px-24">
-        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-2xl sm:text-4xl font-extrabold text-brand-ink">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-2xl sm:text-4xl font-extrabold text-brand-ink dark:text-white">
           Nationwide Coverage
         </motion.h2>
-        <motion.p variants={itemVariant} custom={isMobile} className="text-base sm:text-lg text-brand-ink/70">We place providers in all 50 states.</motion.p>
+        <motion.p variants={itemVariant} custom={isMobile} className="text-base sm:text-lg text-brand-ink/70 dark:text-slate-400">We place providers in all 50 states.</motion.p>
       </div>
       <motion.div 
         variants={mapContainerVariant} 
@@ -601,7 +595,7 @@ const Specialties = () => {
     },
     {
       title: "Long-Term\nCare (LTC)",
-      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2} d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+      icon: <><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2} d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2} d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></>
     },
     {
       title: "Rehab\n& Therapy",
@@ -622,7 +616,7 @@ const Specialties = () => {
   return (
     <motion.section 
       id="specialties" 
-      className="bg-white py-24 px-4 lg:px-12"
+      className="bg-white dark:bg-slate-900 py-16 px-4 sm:py-24 lg:px-12 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.2 }}
@@ -630,10 +624,10 @@ const Specialties = () => {
       custom={isMobile}
     >
       <div className="mx-auto max-w-7xl text-center">
-        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium text-[#0A2540] lg:text-[2.5rem]">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium text-[#0A2540] dark:text-white lg:text-[2.5rem]">
           Our Clinical Specialties
         </motion.h2>
-        <motion.p variants={itemVariant} custom={isMobile} className="mx-auto mb-10 sm:mb-20 max-w-2xl text-sm sm:text-[16px] leading-relaxed text-[#0A2540]/80 text-center">
+        <motion.p variants={itemVariant} custom={isMobile} className="mx-auto mb-10 sm:mb-20 max-w-2xl text-sm sm:text-[16px] leading-relaxed text-[#0A2540]/80 dark:text-slate-400 text-center">
           Argyle Medical Staffing connects top-tier talent across high-demand medical fields. We seamlessly match credentialed professionals with facilities nationwide.
         </motion.p>
         
@@ -651,7 +645,7 @@ const Specialties = () => {
                     whileHover={{ scale: 1.08 }}
                     animate={{ y: [0, -5, 0] }}
                     transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.1 }}
-                    className="flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-shadow duration-300 group-hover:shadow-lg"
+                    className="flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] dark:bg-slate-800 transition-shadow duration-300 group-hover:shadow-lg"
                   >
                     <motion.svg 
                       whileHover={{ scale: 1.1, y: -2 }}
@@ -665,7 +659,7 @@ const Specialties = () => {
                   </motion.div>
                 </MagneticButton>
               </LinearGlowCard>
-              <h3 className="whitespace-pre-line text-center text-[12px] sm:text-[13px] lg:text-[15px] font-medium leading-snug text-slate-900 transition-colors">
+              <h3 className="whitespace-pre-line text-center text-[12px] sm:text-[13px] lg:text-[15px] font-medium leading-snug text-slate-900 dark:text-slate-100 transition-colors">
                 {spec.title}
               </h3>
             </motion.div>
@@ -676,7 +670,6 @@ const Specialties = () => {
   );
 };
 
-// Section 7: Facility Value Propositions (Navy Section)
 // Section 7: Facility Value Propositions (Navy Section)
 const FacilityProps = () => {
   const isMobile = useIsMobile();
@@ -714,10 +707,9 @@ const FacilityProps = () => {
   ];
 
   return (
-    <section id="facilities" className="bg-[#0A2540] py-16 px-4 sm:py-32 lg:px-12 text-white relative overflow-hidden z-0">
+    <section id="facilities" className="bg-[#0A2540] dark:bg-slate-950 py-16 px-4 sm:py-32 lg:px-12 text-white relative overflow-hidden z-0 transition-colors duration-300">
       <AmbientAurora />
       <div className="relative z-10 mx-auto max-w-7xl">
-        {/* Header Text */}
         {/* Header Text */}
         <motion.div 
           className="text-center mb-10 sm:mb-20"
@@ -777,7 +769,7 @@ const FacilityProps = () => {
                 className="w-full h-full"
               >
                 <StripeTilt className="w-full h-full">
-                  <LinearGlowCard className="group h-full flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors hover:bg-[#133A63] hover:-translate-y-1">
+                  <LinearGlowCard className="group h-full flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] dark:bg-slate-900 p-5 sm:p-8 border border-[#1A456E] dark:border-slate-800 transition-colors hover:bg-[#133A63] dark:hover:bg-slate-800 hover:-translate-y-1">
                     <div className="flex-shrink-0">
                       <motion.div
                         animate={{ opacity: [0.7, 1, 0.7] }}
@@ -797,7 +789,7 @@ const FacilityProps = () => {
                       <h3 className="mb-2 text-[14px] sm:text-[16px] font-bold text-white leading-tight">
                         {card.title}
                       </h3>
-                      <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#8DA6C1]">
+                      <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#8DA6C1] dark:text-slate-400">
                         {card.desc}
                       </p>
                     </div>
@@ -838,7 +830,7 @@ const FindJobs = () => {
   return (
     <motion.section 
       id="clinicians" 
-      className="relative overflow-hidden bg-[#0A2540] py-16 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-[#0A2540] dark:bg-slate-950 py-16 sm:py-32 lg:py-40 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.25 }}
@@ -856,8 +848,8 @@ const FindJobs = () => {
           }}
           className="h-full w-full object-cover object-[center_30%]"
         />
-        {/* Gradient overlay to ensure text readability on the right side */}
-        <div className="absolute inset-0 bg-[#0A2540]/80"></div>
+        {/* Dark overlay specifically matching the dark mode / facility props color */}
+        <div className="absolute inset-0 bg-[#0A2540]/80 dark:bg-slate-950/70 z-0 transition-colors duration-300"></div>
       </div>
       
       {/* Content Container pushed to the right */}
