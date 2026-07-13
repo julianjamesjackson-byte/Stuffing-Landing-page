@@ -12,7 +12,13 @@ import {
   lineDrawVariant,
   detailPopupVariant,
   wordVariant,
-  itemVariant
+  itemVariant,
+  timelineContainerVariant,
+  timelineItemVariant,
+  timelineLineVariant,
+  mapContainerVariant,
+  gridItemVariant,
+  visContainerVariant as gridContainerVariant
 } from './animations';
 
 // Section 2: Stats Badge Wheel
@@ -410,6 +416,7 @@ const FloatingCollageSection = () => {
 
 // Section 4: Logistics Timeline
 const Timeline = () => {
+  const isMobile = useIsMobile();
   const steps = [
     {
       title: "Recruiter\nReview",
@@ -444,71 +451,107 @@ const Timeline = () => {
   ];
 
   return (
-    <section className="bg-white py-16 px-4 sm:py-32 lg:px-12">
+    <motion.section 
+      className="bg-white py-16 px-4 sm:py-32 lg:px-12"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.25 }}
+      variants={timelineContainerVariant}
+      custom={isMobile}
+    >
       <div className="mx-auto max-w-6xl text-center">
         {/* Header Text */}
-        <h2 className="mb-4 font-display text-xl sm:text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] lg:text-[2.5rem]">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium leading-[1.2] text-[#3A4B5C] lg:text-[2.5rem]">
           With Argyle Medical Staffing, you're not walking<br className="hidden md:block" />
           {' '}into your next role alone.<br className="hidden md:block" />
           {' '}Let us handle the details so you can focus on what you do best.
-        </h2>
+        </motion.h2>
 
         {/* Timeline Graphic */}
         <div className="relative mt-16 md:mt-24 flex flex-col md:flex-row w-full items-center justify-between">
-          {/* Dashed Line (Vertical on mobile, Horizontal on md) */}
-          <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-brand-primary/40 z-0 md:translate-x-0 md:left-0 md:right-0 md:top-12 md:bottom-auto md:w-auto md:h-[2px] md:border-l-0 md:border-t-2"></div>
+          {/* Animated SVG Dashed Line */}
+          <motion.svg 
+            className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] h-full z-0 md:translate-x-0 md:left-0 md:right-0 md:top-12 md:bottom-auto md:w-full md:h-[2px]"
+            preserveAspectRatio="none"
+            variants={timelineLineVariant}
+          >
+            <line 
+              x1="0" y1="0" 
+              x2={isMobile ? "0" : "100%"} 
+              y2={isMobile ? "100%" : "0"} 
+              stroke="#007C74" 
+              strokeWidth="2" 
+              strokeOpacity="0.4" 
+            />
+          </motion.svg>
           
           {/* Start Label */}
-          <div className="relative z-10 bg-white pb-6 md:pb-0 md:pr-4 font-sans text-[15px] font-medium text-[#3A4B5C]">
+          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white pb-6 md:pb-0 md:pr-4 font-sans text-[15px] font-medium text-[#3A4B5C]">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-brand-primary"></div>
               You
             </div>
-          </div>
+          </motion.div>
 
           {/* Icons Flex Container */}
           <div className="relative z-10 flex flex-col md:flex-row flex-1 items-center justify-around gap-8 md:gap-0 px-4 lg:px-8 py-4 md:py-0">
             {steps.map((step, i) => (
-              <div key={i} className="flex flex-col items-center group bg-white md:bg-transparent py-2 md:py-0 px-2 md:px-0">
-                <div className="mb-4 flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-[#E0F8F8] shadow-sm transition-transform duration-300 group-hover:scale-110">
+              <motion.div variants={timelineItemVariant} key={i} className="flex flex-col items-center group bg-white md:bg-transparent py-2 md:py-0 px-2 md:px-0">
+                <motion.div 
+                  whileHover={{ scale: 1.05, boxShadow: "0px 8px 24px rgba(0, 124, 116, 0.25)" }}
+                  className="mb-4 flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-[#E0F8F8] shadow-sm transition-colors duration-300"
+                >
                   <svg className="h-8 w-8 md:h-10 md:w-10 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     {step.icon}
                   </svg>
-                </div>
+                </motion.div>
                 <h3 className="whitespace-pre-line text-center text-[14px] md:text-[15px] font-bold leading-tight text-slate-900">
                   {step.title}
                 </h3>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* End Label */}
-          <div className="relative z-10 bg-white pt-6 md:pt-0 md:pl-4 font-sans text-[15px] font-medium text-[#3A4B5C] text-center md:text-right">
+          <motion.div variants={timelineItemVariant} className="relative z-10 bg-white pt-6 md:pt-0 md:pl-4 font-sans text-[15px] font-medium text-[#3A4B5C] text-center md:text-right">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <span>Your Next<br className="hidden md:block" /> Role</span>
               <div className="h-1.5 w-1.5 rounded-full bg-brand-primary"></div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
 // Section 5: US Map Search
-const USMap = () => (
-  <section className="bg-slate-50 py-24">
-    <div className="flex flex-col items-center text-center px-8 lg:px-24">
-      <h2 className="mb-4 font-display text-2xl sm:text-4xl font-extrabold text-brand-ink">
-        Nationwide Coverage
-      </h2>
-      <p className="text-base sm:text-lg text-brand-ink/70">We place providers in all 50 states.</p>
-    </div>
-    <div className="mx-auto mt-8 sm:mt-12 w-full max-w-6xl px-2 sm:px-6 h-[300px] sm:h-[450px] md:h-[700px] lg:h-[800px]">
-      <USMapGraphic />
-    </div>
-  </section>
-);
+const USMap = () => {
+  const isMobile = useIsMobile();
+  return (
+    <motion.section 
+      className="bg-slate-50 py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.25 }}
+    >
+      <div className="flex flex-col items-center text-center px-8 lg:px-24">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-2xl sm:text-4xl font-extrabold text-brand-ink">
+          Nationwide Coverage
+        </motion.h2>
+        <motion.p variants={itemVariant} custom={isMobile} className="text-base sm:text-lg text-brand-ink/70">We place providers in all 50 states.</motion.p>
+      </div>
+      <motion.div 
+        variants={mapContainerVariant} 
+        animate={{ y: [0, -8, 0] }}
+        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+        className="mx-auto mt-8 sm:mt-12 w-full max-w-6xl px-2 sm:px-6 h-[300px] sm:h-[450px] md:h-[700px] lg:h-[800px]"
+      >
+        <USMapGraphic />
+      </motion.div>
+    </motion.section>
+  );
+};
 
 // Section 6: Specialty Grid
 const Specialties = () => {
@@ -563,32 +606,58 @@ const Specialties = () => {
     }
   ];
 
+  const isMobile = useIsMobile();
+
   return (
-    <section id="specialties" className="bg-white py-24 px-4 lg:px-12">
+    <motion.section 
+      id="specialties" 
+      className="bg-white py-24 px-4 lg:px-12"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.2 }}
+      variants={gridContainerVariant}
+      custom={isMobile}
+    >
       <div className="mx-auto max-w-7xl text-center">
-        <h2 className="mb-4 font-display text-xl sm:text-[2rem] font-medium text-[#0A2540] lg:text-[2.5rem]">
+        <motion.h2 variants={itemVariant} custom={isMobile} className="mb-4 font-display text-xl sm:text-[2rem] font-medium text-[#0A2540] lg:text-[2.5rem]">
           Our Clinical Specialties
-        </h2>
-        <p className="mx-auto mb-10 sm:mb-20 max-w-2xl text-sm sm:text-[16px] leading-relaxed text-[#0A2540]/80 text-center">
+        </motion.h2>
+        <motion.p variants={itemVariant} custom={isMobile} className="mx-auto mb-10 sm:mb-20 max-w-2xl text-sm sm:text-[16px] leading-relaxed text-[#0A2540]/80 text-center">
           Argyle Medical Staffing connects top-tier talent across high-demand medical fields. We seamlessly match credentialed professionals with facilities nationwide.
-        </p>
+        </motion.p>
         
         <div className="grid grid-cols-2 gap-x-4 gap-y-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {specialtiesData.map((spec, i) => (
-            <div key={i} className="group flex flex-col items-center">
-              <div className="mb-4 sm:mb-6 flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-md">
-                <svg className="h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <motion.div 
+              key={i} 
+              variants={gridItemVariant} 
+              custom={isMobile}
+              className="group flex flex-col items-center"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.08 }}
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.1 }}
+                className="mb-4 sm:mb-6 flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-shadow duration-300 group-hover:shadow-lg"
+              >
+                <motion.svg 
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 text-brand-primary" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor"
+                >
                   {spec.icon}
-                </svg>
-              </div>
+                </motion.svg>
+              </motion.div>
               <h3 className="whitespace-pre-line text-center text-[12px] sm:text-[13px] lg:text-[15px] font-medium leading-snug text-slate-900 transition-colors">
                 {spec.title}
               </h3>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

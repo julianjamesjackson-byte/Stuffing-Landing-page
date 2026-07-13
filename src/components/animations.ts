@@ -169,3 +169,58 @@ export const detailPopupVariant: Variants = {
   }
 };
 
+export const timelineContainerVariant: Variants = {
+  hidden: {},
+  visible: (isMobile?: boolean) => ({
+    transition: { staggerChildren: isMobile ? 0.05 : 0.15 }
+  }),
+  exit: { transition: { duration: 0.2 } }
+};
+
+export const timelineItemVariant: Variants = {
+  hidden: { opacity: 0, scale: 0.8, y: 20 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 120, damping: 12 } 
+  },
+  exit: { opacity: 0, scale: 0.8, y: 20, transition: { duration: 0.2 } }
+};
+
+export const timelineLineVariant: Variants = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    strokeDasharray: "10 5",
+    strokeDashoffset: [0, -100],
+    transition: {
+      pathLength: { duration: 1.5, ease: "easeInOut" },
+      strokeDashoffset: { repeat: Infinity, duration: 4, ease: "linear" },
+      opacity: { duration: 1 }
+    }
+  },
+  exit: { pathLength: 0, opacity: 0, transition: { duration: 0.2 } }
+};
+
+export const mapContainerVariant: Variants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { duration: 0.8, ease: "easeOut" }
+  },
+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } }
+};
+
+export const gridItemVariant: Variants = {
+  hidden: (isMobile?: boolean) => ({ opacity: 0, y: isMobile ? 10 : 30 }),
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] } 
+  },
+  exit: (isMobile?: boolean) => ({ opacity: 0, y: isMobile ? 10 : 30, transition: { duration: 0.2 } })
+};
+

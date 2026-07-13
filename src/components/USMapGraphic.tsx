@@ -36,7 +36,13 @@ const stateAbbreviations: Record<string, string> = {
   "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY"
 };
 
+import { useIsMobile } from "../hooks/useIsMobile";
+
+const pulsingStates = ["CA", "TX", "FL", "NY", "IL", "WA", "NC", "CO", "OH", "GA"];
+
 const USMapGraphic = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="relative h-full w-full">
       {/* Premium Background Glows */}
@@ -48,20 +54,26 @@ const USMapGraphic = () => {
         <Geographies geography={geoUrl}>
           {({ geographies }) => (
             <>
-              {geographies.map(geo => (
-                <Geography
-                  key={geo.rsmKey}
-                  stroke="#00A99D"
-                  geography={geo}
-                  fill="#D2E7E6"
-                  strokeWidth={0.75}
-                  style={{
-                    default: { outline: "none" },
-                    hover: { fill: "#B5D9D7", outline: "none" },
-                    pressed: { outline: "none" },
-                  }}
-                />
-              ))}
+              {geographies.map(geo => {
+                const stateAbbr = stateAbbreviations[geo.properties.name];
+                const isPulsing = !isMobile && stateAbbr && pulsingStates.includes(stateAbbr);
+                
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    stroke="#00A99D"
+                    geography={geo}
+                    fill="#D2E7E6"
+                    strokeWidth={0.75}
+                    className={isPulsing ? "animate-map-pulse" : ""}
+                    style={{
+                      default: { outline: "none" },
+                      hover: isMobile ? { outline: "none" } : { fill: "#B5D9D7", outline: "none" },
+                      pressed: { outline: "none" },
+                    }}
+                  />
+                );
+              })}
               {geographies.map(geo => {
                 const centroid = geoCentroid(geo);
                 const cur = stateAbbreviations[geo.properties.name];
