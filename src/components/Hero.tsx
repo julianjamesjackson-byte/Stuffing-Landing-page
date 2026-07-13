@@ -5,16 +5,14 @@ import {
   containerVariant,
   itemVariant,
   headerVariant,
-  navItemVariant,
-  h1Variant,
-  wordVariant
+  navItemVariant
 } from './animations';
 import argyleLogo from '../assets/argyle-logo.jpeg';
 import hospitalBg from '../assets/hospital-bg.png';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { AppleTextReveal, MagneticButton } from './PremiumAnimations';
 
 const headline = "Connecting Exceptional Healthcare Talent with Organizations That Care";
-const headlineWords = headline.split(" ");
 
 export default function Hero() {
   const isMobile = useIsMobile();
@@ -57,20 +55,24 @@ export default function Hero() {
         {/* Right Actions */}
         <div className="hidden items-center gap-4 lg:flex">
           <motion.div variants={navItemVariant} custom={isMobile}>
-            <Link
-              to="/request-talent"
-              className="rounded bg-brand-primary px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite]"
-            >
-              Request Talent
-            </Link>
+            <MagneticButton>
+              <Link
+                to="/request-talent"
+                className="rounded bg-brand-primary px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite] block"
+              >
+                Request Talent
+              </Link>
+            </MagneticButton>
           </motion.div>
           <motion.div variants={navItemVariant} custom={isMobile}>
-            <Link
-              to="/explore-careers"
-              className="rounded border border-brand-primary bg-white px-6 py-2.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite]"
-            >
-              Explore Careers
-            </Link>
+            <MagneticButton>
+              <Link
+                to="/explore-careers"
+                className="rounded border border-brand-primary bg-white px-6 py-2.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite] block"
+              >
+                Explore Careers
+              </Link>
+            </MagneticButton>
           </motion.div>
         </div>
       </motion.nav>
@@ -80,7 +82,7 @@ export default function Hero() {
         className="relative flex min-h-[60vh] sm:min-h-[75vh] w-full items-center overflow-hidden"
       >
         <motion.div
-          className="absolute inset-0 overflow-hidden"
+          className="absolute inset-0 overflow-hidden perspective-[1000px]"
           variants={nurseImageVariant}
           initial="hidden"
           whileInView="visible"
@@ -89,8 +91,8 @@ export default function Hero() {
           <motion.div 
             className="w-full h-full bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${hospitalBg})` }}
-            animate={{ scale: [1, 1.015, 1] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+            animate={isMobile ? undefined : { scale: [1.05, 1.08, 1.05], y: [0, -15, 0], rotateZ: [0, 1, 0, -1, 0] }}
+            transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
           />
         </motion.div>
         
@@ -121,13 +123,10 @@ export default function Hero() {
               Trusted by 2,400+ healthcare professionals
             </motion.div>
 
-            <motion.h1 variants={h1Variant} className="mb-5 font-heading text-2xl sm:text-3xl font-bold leading-[1.1] tracking-tight text-brand-ink md:text-[2.75rem]">
-              {headlineWords.map((word, index) => (
-                <motion.span key={index} variants={wordVariant} className="inline-block mr-[0.25em]">
-                  {word}
-                </motion.span>
-              ))}
-            </motion.h1>
+            <AppleTextReveal 
+              text={headline} 
+              className="mb-5 font-heading text-2xl sm:text-3xl font-bold leading-[1.1] tracking-tight text-brand-ink md:text-[2.75rem] justify-start"
+            />
 
             <motion.p variants={itemVariant} className="mb-6 sm:mb-8 max-w-[500px] font-sans text-xs sm:text-sm font-medium leading-[1.6] text-brand-ink/80 md:text-[15px]">
               Hiring the right healthcare professionals shouldn't slow down patient care. We help hospitals, clinics, and healthcare facilities quickly connect with qualified medical talent while helping clinicians find rewarding opportunities with leading employers. Whether you need permanent hires or flexible staffing, we're here to deliver the right fit—every time.
@@ -135,21 +134,26 @@ export default function Hero() {
 
             {/* CTAs - The Tri-Funnel */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <motion.div variants={itemVariant} custom={isMobile} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded">
-                <Link
-                  to="/request-talent"
-                  className="inline-flex w-full items-center justify-center rounded bg-brand-primary px-6 py-2.5 text-sm sm:px-8 sm:py-3 sm:text-base font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
-                >
-                  Request Talent
-                </Link>
+              <motion.div variants={itemVariant} custom={isMobile} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded relative">
+                <MagneticButton>
+                  <Link
+                    to="/request-talent"
+                    className="flex w-full sm:w-auto items-center justify-center rounded bg-brand-primary px-8 py-3.5 text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 hover:bg-brand-primary-dk hover:shadow-lg"
+                  >
+                    Request Talent
+                  </Link>
+                </MagneticButton>
               </motion.div>
-              <motion.div variants={itemVariant} custom={isMobile} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded">
-                <Link
-                  to="/explore-careers"
-                  className="inline-flex w-full items-center justify-center rounded border border-brand-primary bg-white px-6 py-2.5 text-sm sm:px-8 sm:py-3 sm:text-base font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
-                >
-                  Explore Careers
-                </Link>
+              
+              <motion.div variants={itemVariant} custom={isMobile} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded relative">
+                <MagneticButton>
+                  <Link
+                    to="/explore-careers"
+                    className="flex w-full sm:w-auto items-center justify-center rounded border border-brand-primary bg-white px-8 py-3.5 text-sm font-bold text-brand-primary transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 hover:bg-slate-50 hover:shadow-md"
+                  >
+                    Explore Careers
+                  </Link>
+                </MagneticButton>
               </motion.div>
             </div>
             

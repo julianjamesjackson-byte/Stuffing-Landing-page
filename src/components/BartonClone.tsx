@@ -19,10 +19,10 @@ import {
   mapContainerVariant,
   gridItemVariant,
   visContainerVariant as gridContainerVariant,
-  maskedTextVariant,
   cinematicBgVariant,
   cardVariant
 } from './animations';
+import { AppleTextReveal, LinearGlowCard, StripeTilt, MagneticButton, AmbientAurora } from './PremiumAnimations';
 
 // Section 2: Stats Badge Wheel
 const CountingNumber = ({ value, suffix = "", prefix = "", isFloat = false }: { value: number, suffix?: string, prefix?: string, isFloat?: boolean }) => {
@@ -146,7 +146,7 @@ const StatsWheel = () => {
             {leftStats.map((item, i) => (
               <motion.div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm cursor-pointer"
+                className="rounded-full cursor-pointer w-full max-w-sm"
                 variants={nodeDockVariant}
                 custom={{x: 0, y: 0}}
                 animate={getVariantState(item.id)}
@@ -155,10 +155,12 @@ const StatsWheel = () => {
                 onMouseLeave={() => setActiveNode(null)}
                 onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
-                <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                  <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
-                </div>
-                <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm">
+                  <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
+                    <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
+                  </div>
+                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                </LinearGlowCard>
               </motion.div>
             ))}
           </div>
@@ -206,7 +208,7 @@ const StatsWheel = () => {
             {rightStats.map((item, i) => (
               <motion.div 
                 key={i} 
-                className="flex items-center rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm cursor-pointer"
+                className="rounded-full cursor-pointer w-full max-w-sm"
                 variants={nodeDockVariant}
                 custom={{x: 0, y: 0}}
                 animate={getVariantState(item.id)}
@@ -215,10 +217,12 @@ const StatsWheel = () => {
                 onMouseLeave={() => setActiveNode(null)}
                 onClick={() => setActiveNode(activeNode === item.id ? null : item.id)}
               >
-                <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                  <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
-                </div>
-                <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 bg-white p-1.5 pr-4 sm:pr-6 shadow-sm">
+                  <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
+                    <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
+                  </div>
+                  <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90">{item.text}</span>
+                </LinearGlowCard>
               </motion.div>
             ))}
           </div>
@@ -500,14 +504,18 @@ const Timeline = () => {
           <div className="relative z-10 flex flex-col md:flex-row flex-1 items-center justify-around gap-8 md:gap-0 px-4 lg:px-8 py-4 md:py-0">
             {steps.map((step, i) => (
               <motion.div variants={timelineItemVariant} key={i} className="flex flex-col items-center group bg-white md:bg-transparent py-2 md:py-0 px-2 md:px-0">
-                <motion.div 
-                  whileHover={{ scale: 1.05, boxShadow: "0px 8px 24px rgba(0, 124, 116, 0.25)" }}
-                  className="mb-4 flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-[#E0F8F8] shadow-sm transition-colors duration-300"
-                >
-                  <svg className="h-8 w-8 md:h-10 md:w-10 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    {step.icon}
-                  </svg>
-                </motion.div>
+                <LinearGlowCard className="mb-4 rounded-full">
+                  <MagneticButton>
+                    <motion.div 
+                      whileHover={{ scale: 1.05, boxShadow: "0px 8px 24px rgba(0, 124, 116, 0.25)" }}
+                      className="flex h-20 w-20 md:h-24 md:w-24 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-[#E0F8F8] shadow-sm transition-colors duration-300"
+                    >
+                      <svg className="h-8 w-8 md:h-10 md:w-10 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        {step.icon}
+                      </svg>
+                    </motion.div>
+                  </MagneticButton>
+                </LinearGlowCard>
                 <h3 className="whitespace-pre-line text-center text-[14px] md:text-[15px] font-bold leading-tight text-slate-900">
                   {step.title}
                 </h3>
@@ -637,22 +645,26 @@ const Specialties = () => {
               custom={isMobile}
               className="group flex flex-col items-center"
             >
-              <motion.div 
-                whileHover={{ scale: 1.08 }}
-                animate={{ y: [0, -5, 0] }}
-                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.1 }}
-                className="mb-4 sm:mb-6 flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-shadow duration-300 group-hover:shadow-lg"
-              >
-                <motion.svg 
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  className="h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 text-brand-primary" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor"
-                >
-                  {spec.icon}
-                </motion.svg>
-              </motion.div>
+              <LinearGlowCard className="mb-4 sm:mb-6 rounded-full">
+                <MagneticButton>
+                  <motion.div 
+                    whileHover={{ scale: 1.08 }}
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.1 }}
+                    className="flex h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] lg:h-[120px] lg:w-[120px] items-center justify-center rounded-full bg-[#E0F8F8] transition-shadow duration-300 group-hover:shadow-lg"
+                  >
+                    <motion.svg 
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      className="h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 text-brand-primary" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor"
+                    >
+                      {spec.icon}
+                    </motion.svg>
+                  </motion.div>
+                </MagneticButton>
+              </LinearGlowCard>
               <h3 className="whitespace-pre-line text-center text-[12px] sm:text-[13px] lg:text-[15px] font-medium leading-snug text-slate-900 transition-colors">
                 {spec.title}
               </h3>
@@ -702,8 +714,9 @@ const FacilityProps = () => {
   ];
 
   return (
-    <section id="facilities" className="bg-[#0A2540] py-16 px-4 sm:py-32 lg:px-12 text-white">
-      <div className="mx-auto max-w-7xl">
+    <section id="facilities" className="bg-[#0A2540] py-16 px-4 sm:py-32 lg:px-12 text-white relative overflow-hidden z-0">
+      <AmbientAurora />
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Header Text */}
         {/* Header Text */}
         <motion.div 
@@ -717,15 +730,10 @@ const FacilityProps = () => {
             exit: { transition: { duration: 0.2 } }
           }}
         >
-          <div className="overflow-hidden pb-4 mb-2">
-            <motion.h2 
-              variants={maskedTextVariant}
-              className="font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]"
-            >
-              Strategic healthcare staffing for facilities<br className="hidden md:block" />
-              {' '}that need reliable coverage in critical roles
-            </motion.h2>
-          </div>
+          <AppleTextReveal 
+            text="Strategic healthcare staffing for facilities that need reliable coverage in critical roles"
+            className="mb-6 font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]"
+          />
           <motion.p variants={itemVariant} custom={isMobile} className="mx-auto max-w-2xl text-sm sm:text-[16px] leading-relaxed text-slate-300 text-center mb-10">
             Argyle Medical Staffing provides comprehensive staffing solutions for hospitals, health systems, and healthcare organizations facing urgent gaps in coverage - coast-to-coast. From rural clinics to major health systems, we move quickly, match thoughtfully, and stay accountable from first call through start date.
           </motion.p>
@@ -737,9 +745,11 @@ const FacilityProps = () => {
               className="absolute inset-0 bg-brand-primary blur-[20px] rounded-full z-0"
             ></motion.div>
             <motion.div className="relative z-10" whileHover={{ scale: 1.05 }}>
-              <Link to="/request-talent" className="inline-flex items-center justify-center rounded-full bg-brand-primary px-10 py-4 font-bold text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-                Request Talent
-              </Link>
+              <MagneticButton>
+                <Link to="/request-talent" className="inline-flex items-center justify-center rounded-full bg-brand-primary px-10 py-4 font-bold text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                  Request Talent
+                </Link>
+              </MagneticButton>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -764,32 +774,35 @@ const FacilityProps = () => {
                 key={i} 
                 variants={cardVariant}
                 custom={isMobile}
-                whileHover={{ y: -5, backgroundColor: "#133A63", borderColor: "#276296" }}
-                className="group flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors"
+                className="w-full h-full"
               >
-                <div className="flex-shrink-0">
-                  <motion.div
-                    animate={{ opacity: [0.7, 1, 0.7] }}
-                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
-                  >
-                    <motion.svg 
-                      className="h-8 w-8 sm:h-10 sm:w-10 text-teal-300 transition-transform duration-300 group-hover:scale-110" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor"
-                    >
-                      {card.icon}
-                    </motion.svg>
-                  </motion.div>
-                </div>
-                <div>
-                  <h3 className="mb-2 text-[14px] sm:text-[16px] font-bold text-white leading-tight">
-                    {card.title}
-                  </h3>
-                  <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#8DA6C1]">
-                    {card.desc}
-                  </p>
-                </div>
+                <StripeTilt className="w-full h-full">
+                  <LinearGlowCard className="group h-full flex gap-4 sm:gap-5 rounded-none bg-[#0F3052] p-5 sm:p-8 border border-[#1A456E] transition-colors hover:bg-[#133A63] hover:-translate-y-1">
+                    <div className="flex-shrink-0">
+                      <motion.div
+                        animate={{ opacity: [0.7, 1, 0.7] }}
+                        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
+                      >
+                        <motion.svg 
+                          className="h-8 w-8 sm:h-10 sm:w-10 text-teal-300 transition-transform duration-300 group-hover:scale-110" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor"
+                        >
+                          {card.icon}
+                        </motion.svg>
+                      </motion.div>
+                    </div>
+                    <div className="relative z-10 pointer-events-none">
+                      <h3 className="mb-2 text-[14px] sm:text-[16px] font-bold text-white leading-tight">
+                        {card.title}
+                      </h3>
+                      <p className="text-[13px] sm:text-[14px] leading-relaxed text-[#8DA6C1]">
+                        {card.desc}
+                      </p>
+                    </div>
+                  </LinearGlowCard>
+                </StripeTilt>
               </motion.div>
             ))}
           </div>
@@ -810,7 +823,6 @@ const FacilityProps = () => {
               transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
               className="absolute inset-0 h-full w-full object-cover"
             />
-            {/* Teal Overlay Mix Blend */}
             <div className="absolute inset-0 bg-brand-primary/50 mix-blend-multiply"></div>
             <div className="absolute inset-0 bg-brand-primary/20"></div>
           </motion.div>
@@ -858,23 +870,20 @@ const FindJobs = () => {
             exit: { transition: { duration: 0.2 } }
           }}
         >
-          <div className="overflow-hidden pb-4 mb-2">
-            <motion.h2 
-              variants={maskedTextVariant}
-              className="font-display text-2xl sm:text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem]"
-            >
-              Find healthcare opportunities<br className="hidden md:block" />
-              {' '}that fit how you want to practice
-            </motion.h2>
-          </div>
+          <AppleTextReveal
+            text="Find healthcare opportunities that fit how you want to practice"
+            className="font-display text-2xl sm:text-[2.5rem] font-extrabold tracking-tight leading-[1.1] text-white md:text-[3.25rem] justify-start"
+          />
           <motion.p variants={itemVariant} custom={isMobile} className="mb-8 sm:mb-10 text-sm sm:text-[18px] text-white/90 font-medium">
             Whether you are looking for permanent placement, contract roles, or flexible shifts, your next rewarding role starts here.
           </motion.p>
           <motion.div variants={itemVariant} custom={isMobile}>
             <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-              <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-10 py-3.5 text-[15px] font-bold tracking-wide text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
-                Explore Careers
-              </Link>
+              <MagneticButton>
+                <Link to="/explore-careers" className="inline-flex items-center justify-center rounded bg-brand-primary px-10 py-3.5 text-[15px] font-bold tracking-wide text-white transition-all hover:bg-brand-primary-dk shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">
+                  Explore Careers
+                </Link>
+              </MagneticButton>
             </motion.div>
           </motion.div>
         </motion.div>
