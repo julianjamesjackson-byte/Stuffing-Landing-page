@@ -70,15 +70,14 @@ export default function FacilityIntakeForm() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        console.log("Submission successful!");
-      } else {
-        console.warn("Server returned error status: ", response.status);
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`);
       }
       setStatus('success');
     } catch (error) {
-      console.warn("Demo Mode: Webhook failed but simulating success screen for reviewer. Error:", error);
-      setStatus('success');
+      console.error("Submission error:", error);
+      setStatus('error');
+      setErrorMessage("Submission failed. If your website is served over HTTPS, please ensure your n8n webhook URL is also HTTPS (Mixed Content restriction).");
     }
   };
 
