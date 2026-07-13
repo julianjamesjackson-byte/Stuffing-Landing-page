@@ -62,8 +62,7 @@ export default function FacilityIntakeForm() {
     setErrorMessage('');
 
     try {
-      const targetUrl = "http://2.25.76.245:5678/webhook-test/argyle-facility-intake";
-      const response = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`, {
+      const response = await fetch("http://2.25.76.245:5678/webhook-test/argyle-facility-intake", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
