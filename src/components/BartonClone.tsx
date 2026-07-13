@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion, useTransform, useSpring, animate, useInView, AnimatePresence, useMotionValue } from 'framer-motion';
+import { motion, useTransform, useSpring, animate, useInView, AnimatePresence, useMotionValue, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useIsMobile } from '../hooks/useIsMobile';
 import USMapGraphic from './USMapGraphic';
 import facilityMeeting from '../assets/facility_meeting.png';
 import collage1 from '../assets/collage_1.png';
@@ -18,7 +19,7 @@ import {
 const CountingNumber = ({ value, suffix = "", prefix = "", isFloat = false }: { value: number, suffix?: string, prefix?: string, isFloat?: boolean }) => {
   const [display, setDisplay] = useState(0);
   const nodeRef = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(nodeRef, { once: true, amount: 0.5 });
+  const isInView = useInView(nodeRef, { once: false, amount: 0.5 });
   
   useEffect(() => {
     if (isInView) {
@@ -99,7 +100,7 @@ const StatsWheel = () => {
       className="relative overflow-hidden bg-white py-16 px-4 sm:py-24 sm:px-8 lg:px-24"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: false, amount: 0.25 }}
     >
       <ParticleBackground speedMultiplier={activeNode ? 0.3 : 1} />
       
@@ -241,13 +242,19 @@ const COLLAGE_IMAGES = [
 
 const FloatingCollageSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
+
+  // Scroll Parallax for Background Depth
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY1 = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const bgY2 = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
 
   // 1. 3D Mouse Parallax
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (typeof window === 'undefined') return;
+    if (isMobile || typeof window === 'undefined') return;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     const x = (clientX / innerWidth) * 2 - 1;
@@ -259,22 +266,23 @@ const FloatingCollageSection = () => {
   const smoothX = useSpring(mouseX, { stiffness: 40, damping: 20 });
   const smoothY = useSpring(mouseY, { stiffness: 40, damping: 20 });
 
-  const rotateX = useTransform(smoothY, [-1, 1], [10, -10]);
-  const rotateY = useTransform(smoothX, [-1, 1], [-10, 10]);
-  const moveX = useTransform(smoothX, [-1, 1], [-20, 20]);
-  const moveY = useTransform(smoothY, [-1, 1], [-20, 20]);
+  const rotateX = useTransform(smoothY, [-1, 1], isMobile ? [0, 0] : [10, -10]);
+  const rotateY = useTransform(smoothX, [-1, 1], isMobile ? [0, 0] : [-10, 10]);
+  const moveX = useTransform(smoothX, [-1, 1], isMobile ? [0, 0] : [-20, 20]);
+  const moveY = useTransform(smoothY, [-1, 1], isMobile ? [0, 0] : [-20, 20]);
 
   const containerVariants = {
     hidden: {},
-    visible: {
+    visible: (isMobile?: boolean) => ({
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: isMobile ? 0.05 : 0.2,
       },
-    },
+    }),
+    exit: { transition: { duration: 0.2 } }
   };
 
   const cinematicImageVariants = {
-    hidden: { opacity: 0, scale: 0.8, filter: 'blur(20px)', y: 100 },
+    hidden: (isMobile?: boolean) => ({ opacity: 0, scale: 0.8, filter: 'blur(20px)', y: isMobile ? 30 : 100 }),
     visible: {
       opacity: 1,
       scale: 1,
@@ -282,6 +290,7 @@ const FloatingCollageSection = () => {
       y: 0,
       transition: { type: "spring" as const, stiffness: 60, damping: 15 },
     },
+    exit: { opacity: 0, transition: { duration: 0.2 } }
   };
 
   const maskTextVariant = {
@@ -289,7 +298,8 @@ const FloatingCollageSection = () => {
     visible: { 
       y: "0%",
       transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as const }
-    }
+    },
+    exit: { y: "100%", transition: { duration: 0.2 } }
   };
 
   return (
@@ -300,16 +310,17 @@ const FloatingCollageSection = () => {
       className="relative overflow-hidden bg-[#F8FAFC] py-16 px-4 sm:py-32 sm:px-8 lg:py-56 lg:px-24 [perspective:2000px]"
     >
       {/* Background Ambient Glows */}
-      <div className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></div>
-      <div className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></div>
+      <motion.div style={{ y: bgY1 }} className="absolute left-1/4 top-1/4 h-[800px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FCF5E3]/50 blur-[120px] pointer-events-none"></motion.div>
+      <motion.div style={{ y: bgY2 }} className="absolute right-1/4 bottom-1/4 h-[800px] w-[800px] max-w-full translate-x-1/2 translate-y-1/2 rounded-full bg-[#D5F2F2]/50 blur-[120px] pointer-events-none"></motion.div>
 
       {/* Floating Images — 4 Corner Frame */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-0 hidden lg:block"
         variants={containerVariants}
+        custom={isMobile}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
+        viewport={{ once: false, amount: 0.25 }}
       >
         <div className="relative w-full h-full max-w-[1400px] mx-auto [transform-style:preserve-3d]">
           {COLLAGE_IMAGES.map((img, i) => (
@@ -317,6 +328,7 @@ const FloatingCollageSection = () => {
               key={i}
               className={`absolute ${img.pos}`}
               variants={cinematicImageVariants}
+              custom={isMobile}
               style={{ 
                 x: moveX, 
                 y: moveY, 
@@ -325,10 +337,12 @@ const FloatingCollageSection = () => {
                 transformStyle: "preserve-3d"
               }}
             >
-              <div className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded-3xl">
-                <img
+              <div className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded-3xl h-full w-full">
+                <motion.img
                   src={img.src}
                   alt={img.alt}
+                  animate={{ y: [0, 15, 0] }}
+                  transition={{ repeat: Infinity, duration: 6 + i, ease: "easeInOut", delay: i * 0.5 }}
                   className="w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-brand-primary/20"
                 />
               </div>
@@ -342,8 +356,12 @@ const FloatingCollageSection = () => {
         <motion.div 
           initial="hidden" 
           whileInView="visible" 
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ staggerChildren: 0.2 }}
+          viewport={{ once: false, amount: 0.25, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: isMobile ? 0.05 : 0.2 } },
+            exit: { transition: { duration: 0.2 } }
+          }}
           className="w-full flex flex-col items-center justify-center"
         >
           {/* Masked Text Reveal with ample padding for descenders */}

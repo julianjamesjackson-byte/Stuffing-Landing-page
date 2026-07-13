@@ -11,19 +11,23 @@ import {
 } from './animations';
 import argyleLogo from '../assets/argyle-logo.jpeg';
 import hospitalBg from '../assets/hospital-bg.png';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const headline = "Connecting Exceptional Healthcare Talent with Organizations That Care";
 const headlineWords = headline.split(" ");
 
 export default function Hero() {
+  const isMobile = useIsMobile();
   return (
     <>
       {/* ── Navigation (Exact Clone) ─────────────────────────────────── */}
       <motion.nav 
         className="relative z-20 flex w-full items-center justify-between bg-white px-4 py-3 shadow-sm sm:px-8 sm:py-5 lg:px-12"
         variants={headerVariant}
+        custom={isMobile}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.25 }}
       >
         {/* Logo */}
         <motion.div variants={navItemVariant} className="flex items-center gap-3">
@@ -52,18 +56,18 @@ export default function Hero() {
 
         {/* Right Actions */}
         <div className="hidden items-center gap-4 lg:flex">
-          <motion.div variants={navItemVariant}>
+          <motion.div variants={navItemVariant} custom={isMobile}>
             <Link
               to="/request-talent"
-              className="rounded bg-brand-primary px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+              className="rounded bg-brand-primary px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite]"
             >
               Request Talent
             </Link>
           </motion.div>
-          <motion.div variants={navItemVariant}>
+          <motion.div variants={navItemVariant} custom={isMobile}>
             <Link
               to="/explore-careers"
-              className="rounded border border-brand-primary bg-white px-6 py-2.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+              className="rounded border border-brand-primary bg-white px-6 py-2.5 text-sm font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 animate-[pulseShadow_4s_ease-in-out_infinite]"
             >
               Explore Careers
             </Link>
@@ -76,12 +80,19 @@ export default function Hero() {
         className="relative flex min-h-[60vh] sm:min-h-[75vh] w-full items-center overflow-hidden"
       >
         <motion.div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${hospitalBg})` }}
+          className="absolute inset-0 overflow-hidden"
           variants={nurseImageVariant}
           initial="hidden"
-          animate="visible"
-        />
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.25 }}
+        >
+          <motion.div 
+            className="w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${hospitalBg})` }}
+            animate={{ scale: [1, 1.015, 1] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          />
+        </motion.div>
         
         {/* Solid white fade at the bottom */}
         <div className="absolute inset-0 bg-white/30 z-0"></div>
@@ -90,12 +101,14 @@ export default function Hero() {
         <div className="absolute inset-y-0 left-0 w-full max-w-3xl bg-white/75 z-0"></div>
 
         {/* ── Hero Content ── */}
-        <div className="relative z-10 w-full px-4 pb-12 pt-10 sm:px-8 sm:pb-20 sm:pt-16 lg:px-24">
+        <div className="relative z-10 w-full px-4 pb-12 pt-10 sm:px-8 sm:pb-20 sm:pt-16 lg:px-24 pointer-events-none">
           <motion.div 
-            className="max-w-[640px]"
+            className="max-w-[640px] pointer-events-auto"
             variants={containerVariant}
+            custom={isMobile}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.25 }}
           >
             
             {/* Eyebrow Pill */}
@@ -122,7 +135,7 @@ export default function Hero() {
 
             {/* CTAs - The Tri-Funnel */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <motion.div variants={itemVariant} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}>
+              <motion.div variants={itemVariant} custom={isMobile} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded">
                 <Link
                   to="/request-talent"
                   className="inline-flex w-full items-center justify-center rounded bg-brand-primary px-6 py-2.5 text-sm sm:px-8 sm:py-3 sm:text-base font-bold text-white transition-colors hover:bg-brand-primary-dk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
@@ -130,7 +143,7 @@ export default function Hero() {
                   Request Talent
                 </Link>
               </motion.div>
-              <motion.div variants={itemVariant} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}>
+              <motion.div variants={itemVariant} custom={isMobile} whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }} className="animate-[pulseShadow_4s_ease-in-out_infinite] rounded">
                 <Link
                   to="/explore-careers"
                   className="inline-flex w-full items-center justify-center rounded border border-brand-primary bg-white px-6 py-2.5 text-sm sm:px-8 sm:py-3 sm:text-base font-bold text-brand-primary transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
@@ -140,7 +153,7 @@ export default function Hero() {
               </motion.div>
             </div>
             
-            <motion.div variants={itemVariant} className="mt-5 inline-block" whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}>
+            <motion.div variants={itemVariant} custom={isMobile} className="mt-5 inline-block" whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}>
               <Link to="/partner-with-us" className="inline-flex items-center text-sm font-bold text-brand-ink/70 transition-colors hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm">
                 Partner With Us &rarr;
               </Link>
