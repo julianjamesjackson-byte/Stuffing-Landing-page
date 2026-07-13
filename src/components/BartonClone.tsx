@@ -175,8 +175,8 @@ const StatsWheel = () => {
               <div className="flex h-[130px] w-[130px] sm:h-[180px] sm:w-[180px] items-center justify-center rounded-full bg-[#87E1DE] dark:bg-brand-primary/20">
                 <LinearGlowCard className="relative z-10 flex h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] cursor-pointer items-center justify-center rounded-full border-[4px] sm:border-[6px] border-brand-primary bg-white dark:bg-slate-900 shadow-md transition-all duration-500 hover:scale-110 hover:shadow-[0_0_25px_rgba(0,124,116,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 group">
                   {/* A Logo */}
-                    <div className="relative flex items-center justify-center text-[2.5rem] sm:text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12">
-                    <span className="absolute">A</span>
+                  <div className="relative flex items-center justify-center text-[2.5rem] sm:text-[3.5rem] font-display font-extrabold tracking-tighter text-brand-primary transition-transform duration-500 group-hover:rotate-12 h-full w-full">
+                    <span className="relative z-10 leading-none mt-1 sm:mt-2">A</span>
                     {/* Minimalist ring to mimic the stylized 'B' swirl */}
                     <div className="absolute h-[50px] w-[50px] sm:h-[72px] sm:w-[72px] rounded-full border-[4px] sm:border-[6px] border-transparent border-b-brand-primary border-l-brand-primary -rotate-45 transition-transform duration-700 group-hover:rotate-[135deg]"></div>
                   </div>
