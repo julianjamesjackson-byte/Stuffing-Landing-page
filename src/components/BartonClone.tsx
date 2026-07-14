@@ -24,25 +24,7 @@ import {
 } from './animations';
 import { AppleTextReveal, LinearGlowCard, StripeTilt, MagneticButton, AmbientAurora } from './PremiumAnimations';
 
-// Section 2: Stats Badge Wheel
-const CountingNumber = ({ value, suffix = "", prefix = "", isFloat = false }: { value: number, suffix?: string, prefix?: string, isFloat?: boolean }) => {
-  const [display, setDisplay] = useState(0);
-  const nodeRef = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(nodeRef, { once: false, amount: 0.5 });
-  
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(0, value, {
-        duration: 2,
-        ease: "easeOut",
-        onUpdate: (v) => setDisplay(isFloat ? Number(v.toFixed(1)) : Math.round(v))
-      });
-      return controls.stop;
-    }
-  }, [isInView, value, isFloat]);
-
-  return <span ref={nodeRef}>{prefix}{display}{suffix}</span>;
-}
+// Removed CountingNumber as it's no longer needed
 
 const ParticleBackground = ({ speedMultiplier = 1 }: { speedMultiplier?: number }) => {
   return (
@@ -77,21 +59,19 @@ const ParticleBackground = ({ speedMultiplier = 1 }: { speedMultiplier?: number 
 };
 
 // Section 2: Stats Badge Wheel
-type StatItem = { stat: number; suffix: string; text: string; delay: number; lineDelay: number; id: string; popup: string; line: { x1: number; y1: number; x2: number; y2: number; }; isFloat?: boolean; };
+type StatItem = { header: string; text: string; delay: number; lineDelay: number; id: string; popup: string; line: { x1: number; y1: number; x2: number; y2: number; }; };
 
 const StatsWheel = () => {
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
   const leftStats: StatItem[] = [
-    { stat: 25, suffix: "+", text: "Years of experience", delay: 1.35, lineDelay: 1.25, id: 'tl', popup: 'Industry Veterans', line: { x1: 200, y1: 50, x2: 400, y2: 150 } },
-    { stat: 1, suffix: "M+", text: "Network of pre-vetted professionals", delay: 1.2, lineDelay: 1.1, id: 'ml', popup: 'Vast Talent Pool', line: { x1: 200, y1: 150, x2: 400, y2: 150 } },
-    { stat: 24, suffix: "/7", text: "Personalized support", delay: 1.05, lineDelay: 0.95, id: 'bl', popup: 'Always-On Assistance', line: { x1: 200, y1: 250, x2: 400, y2: 150 } }
+    { header: "Growing Network", text: "Qualified Healthcare Professionals", delay: 1.35, lineDelay: 1.25, id: 'tl', popup: 'Industry Veterans', line: { x1: 200, y1: 100, x2: 400, y2: 150 } },
+    { header: "Nationwide Reach", text: "Staffing Across the U.S.", delay: 1.05, lineDelay: 0.95, id: 'bl', popup: 'Always-On Assistance', line: { x1: 200, y1: 200, x2: 400, y2: 150 } }
   ];
   
   const rightStats: StatItem[] = [
-    { stat: 50, suffix: "", text: "State coverage", delay: 0.6, lineDelay: 0.5, id: 'tr', popup: 'National Network & Logistics', line: { x1: 600, y1: 50, x2: 400, y2: 150 } },
-    { stat: 4.4, isFloat: true, suffix: " ★", text: "Rating from clinicians on TrustPilot", delay: 0.75, lineDelay: 0.65, id: 'mr', popup: 'Clinician Trusted & Verified', line: { x1: 600, y1: 150, x2: 400, y2: 150 } },
-    { stat: 83, suffix: "%", text: "Faster credentialing", delay: 0.9, lineDelay: 0.8, id: 'br', popup: 'Streamlined Onboarding', line: { x1: 600, y1: 250, x2: 400, y2: 150 } }
+    { header: "Healthcare Focused", text: "Specialized Recruiting Solutions", delay: 0.75, lineDelay: 0.65, id: 'tr', popup: 'National Network & Logistics', line: { x1: 600, y1: 100, x2: 400, y2: 150 } },
+    { header: "Dedicated Support", text: "Personalized Service Every Step", delay: 0.9, lineDelay: 0.8, id: 'br', popup: 'Streamlined Onboarding', line: { x1: 600, y1: 200, x2: 400, y2: 150 } }
   ];
 
   const footerText = "At Argyle Staffing and Recruiting, we make healthcare hiring simple, strategic, and reliable. Our experienced recruiters connect healthcare organizations with highly qualified professionals who are ready to make an immediate impact, while helping clinicians discover career opportunities that align with their skills and goals. By combining industry expertise with personalized service, we deliver staffing solutions that save time, reduce hiring challenges, and support exceptional patient care. When hiring matters most, healthcare organizations trust Argyle to deliver the right talent with confidence.";
@@ -157,7 +137,7 @@ const StatsWheel = () => {
               >
                 <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1.5 pr-4 sm:pr-6 shadow-sm">
                   <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                    <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
+                    {item.header}
                   </div>
                   <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90 dark:text-slate-300">{item.text}</span>
                 </LinearGlowCard>
@@ -219,7 +199,7 @@ const StatsWheel = () => {
               >
                 <LinearGlowCard className="flex items-center w-full rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1.5 pr-4 sm:pr-6 shadow-sm">
                   <div className="flex h-9 sm:h-11 items-center justify-center rounded-full bg-brand-primary-lt px-3 sm:px-5 text-sm sm:text-base font-bold text-[#005a54]">
-                    <CountingNumber value={item.stat} isFloat={item.isFloat} suffix={item.suffix} />
+                    {item.header}
                   </div>
                   <span className="ml-3 sm:ml-4 text-sm sm:text-base font-medium text-brand-ink/90 dark:text-slate-300">{item.text}</span>
                 </LinearGlowCard>
@@ -727,7 +707,7 @@ const FacilityProps = () => {
             className="mb-6 font-display text-xl sm:text-[2rem] font-medium text-white lg:text-[2.75rem] leading-[1.15]"
           />
           <motion.p variants={itemVariant} custom={isMobile} className="mx-auto max-w-2xl text-sm sm:text-[16px] leading-relaxed text-slate-300 text-center mb-10">
-            Argyle Medical Staffing provides comprehensive staffing solutions for hospitals, health systems, and healthcare organizations facing urgent gaps in coverage - coast-to-coast. From rural clinics to major health systems, we move quickly, match thoughtfully, and stay accountable from first call through start date.
+            We help hospitals, clinics, and healthcare organizations quickly connect with qualified clinicians for contract, travel, per diem, and permanent positions.
           </motion.p>
           <motion.div variants={itemVariant} custom={isMobile} className="relative inline-block mt-4">
             {/* Infinite breathing glow */}

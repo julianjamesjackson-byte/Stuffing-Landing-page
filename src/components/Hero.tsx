@@ -70,7 +70,7 @@ export default function Hero() {
             />
 
             <motion.p variants={itemVariant} className="mb-6 sm:mb-8 max-w-[500px] font-sans text-xs sm:text-sm font-medium leading-[1.6] text-brand-ink/80 dark:text-slate-300 md:text-[15px] transition-colors duration-300">
-              Hiring the right healthcare professionals shouldn't slow down patient care. We help hospitals, clinics, and healthcare facilities quickly connect with qualified medical talent while helping clinicians find rewarding opportunities with leading employers. Whether you need permanent hires or flexible staffing, we're here to deliver the right fit—every time.
+              Hiring the right healthcare professionals shouldn't slow down patient care. We help facilities across all 50 states quickly connect with qualified Nursing, Physician, and Allied Health talent. Whether you need permanent hires, contract, travel, or per diem staffing, we’re here to deliver the right fit—every time.
             </motion.p>
 
             {/* CTAs - The Tri-Funnel */}
