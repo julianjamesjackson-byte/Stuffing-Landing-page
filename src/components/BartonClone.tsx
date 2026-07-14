@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion, useTransform, useSpring, animate, useInView, AnimatePresence, useMotionValue, useScroll } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useTransform, useSpring, AnimatePresence, useMotionValue, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useIsMobile } from '../hooks/useIsMobile';
 import USMapGraphic from './USMapGraphic';
