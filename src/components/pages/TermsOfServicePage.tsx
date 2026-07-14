@@ -43,8 +43,8 @@ export default function TermsOfServicePage() {
           <h2 className="text-2xl font-bold mb-4 mt-8">No Employment Guarantee</h2>
           <p className="mb-2">Submitting an application or resume does not guarantee:</p>
           <ul className="list-disc pl-6 mb-4 space-y-1">
-          <li>Employment</li>
-          <li>Placement</li>
+            <li>Employment</li>
+            <li>Placement</li>
             <li>Interviews</li>
             <li>Job offers</li>
           </ul>
