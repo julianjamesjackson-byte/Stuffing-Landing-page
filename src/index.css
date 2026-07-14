@@ -73,8 +73,8 @@
   html  { scroll-behavior: smooth; }
 
   body {
-    background-color: var(--color-brand-bg);
-    color: var(--color-brand-body);
+    @apply bg-white dark:bg-slate-950 text-brand-body dark:text-slate-200;
+
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
