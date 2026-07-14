@@ -87,6 +87,7 @@ const StatsWheel = () => {
 
   return (
     <motion.section 
+      id="request-talent"
       className="relative overflow-hidden bg-white dark:bg-slate-900 py-16 px-4 sm:py-24 sm:px-8 lg:px-24 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
@@ -435,6 +436,7 @@ const Timeline = () => {
 
   return (
     <motion.section 
+      id="explore-careers"
       className="bg-white dark:bg-slate-900 py-16 px-4 sm:py-32 lg:px-12 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"
@@ -517,6 +519,7 @@ const USMap = () => {
   const isMobile = useIsMobile();
   return (
     <motion.section 
+      id="contact-us"
       className="bg-slate-50 dark:bg-slate-950 py-24 transition-colors duration-300"
       initial="hidden"
       whileInView="visible"

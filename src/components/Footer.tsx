@@ -12,8 +12,8 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 text-[12px] font-bold text-[#8DA6C1] uppercase tracking-wider">Company</h4>
             <ul className="flex flex-col gap-3 text-[13px] font-bold text-white">
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Our Story</a></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Contact Us</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Our Story</a></li>
+              <li><a href="/#contact-us" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Contact Us</a></li>
               <li><Link to="/privacy-policy" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Privacy Policy</Link></li>
               <li><Link to="/terms-of-service" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Terms of Service</Link></li>
             </ul>
@@ -22,20 +22,20 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 text-[12px] font-bold text-[#8DA6C1] uppercase tracking-wider">Facilities</h4>
             <ul className="flex flex-col gap-3 text-[13px] font-bold text-white">
-              <li><Link to="/request-talent" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Request Talent</Link></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Credentialing Support</a></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Contingent Search</a></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Direct Placement</a></li>
+              <li><a href="/#request-talent" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Request Talent</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Credentialing Support</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Contingent Search</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Direct Placement</a></li>
             </ul>
           </div>
           {/* Col 3 */}
           <div>
             <h4 className="mb-4 text-[12px] font-bold text-[#8DA6C1] uppercase tracking-wider">Clinicians</h4>
             <ul className="flex flex-col gap-3 text-[13px] font-bold text-white">
-              <li><Link to="/explore-careers" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Explore Careers</Link></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Travel & Contract</a></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Career Support</a></li>
-              <li><a href="#" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Licensing</a></li>
+              <li><a href="/#explore-careers" className="hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Explore Careers</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Travel & Contract</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Career Support</a></li>
+              <li><a onClick={(e) => e.preventDefault()} className="cursor-pointer hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm px-1 py-0.5">Licensing</a></li>
             </ul>
           </div>
           {/* Col 4 */}
@@ -101,7 +101,7 @@ const Footer = () => {
           <div className="flex gap-6">
             <Link to="/privacy-policy" className="hover:text-brand-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm">Privacy Policy</Link>
             <Link to="/terms-of-service" className="hover:text-brand-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm">Terms of Use</Link>
-            <a href="#" className="hover:text-brand-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm">Contact Us</a>
+            <a href="/#contact-us" className="hover:text-brand-primary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm">Contact Us</a>
           </div>
         </div>
       </div>
