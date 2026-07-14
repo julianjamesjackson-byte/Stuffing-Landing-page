@@ -335,6 +335,7 @@ const FloatingCollageSection = () => {
                 <motion.img
                   src={img.src}
                   alt={img.alt}
+                  loading="lazy"
                   animate={{ y: [0, 15, 0] }}
                   transition={{ repeat: Infinity, duration: 6 + i, ease: "easeInOut", delay: i * 0.5 }}
                   className="w-56 h-72 object-cover rounded-3xl shadow-2xl border border-slate-100/50 dark:border-slate-800 pointer-events-auto transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-brand-primary/20"
@@ -821,6 +822,7 @@ const FindJobs = () => {
         <motion.img 
           src={collage1} 
           alt="Locum Professional" 
+          loading="lazy"
           variants={cinematicBgVariant}
           animate={isMobile ? undefined : { scale: [1, 1.05, 1], x: [0, -10, 0] }}
           transition={{
