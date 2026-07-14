@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <motion.nav 
-      className="relative z-30 flex w-full items-center justify-between bg-white dark:bg-slate-900 px-4 py-3 shadow-sm sm:px-8 sm:py-5 lg:px-12 transition-colors duration-300 border-b border-slate-100 dark:border-slate-800"
+      className="relative z-30 flex w-full items-center justify-between bg-white/80 backdrop-blur-md dark:bg-slate-900/80 px-4 py-3 sm:px-8 sm:py-5 lg:px-12 transition-colors duration-300"
       variants={headerVariant}
       custom={isMobile}
       initial="hidden"

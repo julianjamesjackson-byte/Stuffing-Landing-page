@@ -10,17 +10,22 @@ export default function PrivacyPolicyPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-white dark:bg-slate-950 transition-colors duration-300">
+    <div className="relative flex min-h-screen w-full flex-col bg-white dark:bg-slate-900 transition-colors duration-300 overflow-hidden">
+      {/* Subtle Background Glows */}
+      <div className="absolute left-0 top-0 h-[600px] w-[600px] max-w-full -translate-x-1/2 -translate-y-1/4 rounded-full bg-brand-primary-lt/30 blur-[120px] pointer-events-none"></div>
+      <div className="absolute right-0 top-0 h-[600px] w-[600px] max-w-full translate-x-1/3 -translate-y-1/4 rounded-full bg-brand-accent-lt/20 blur-[120px] pointer-events-none"></div>
+
       <Navbar />
+      
       <motion.main 
         variants={containerVariant}
         initial="hidden"
         animate="visible"
-        className="flex-1 px-4 py-16 sm:py-20 lg:px-8 max-w-3xl mx-auto w-full text-slate-800 dark:text-slate-200"
+        className="relative z-10 flex-1 px-4 pt-24 pb-16 sm:pt-32 sm:pb-20 lg:px-8 max-w-4xl mx-auto w-full text-brand-ink dark:text-slate-100"
       >
         <motion.div variants={itemVariant}>
           <h1 className="text-3xl sm:text-4xl font-display font-bold mb-2">Privacy Policy</h1>
-          <p className="text-sm text-slate-500 mb-8 font-medium">Effective Date: July 14, 2026</p>
+          <p className="text-sm text-brand-muted dark:text-slate-400 mb-8 font-medium">Effective Date: July 14, 2026</p>
         </motion.div>
         
         <motion.div variants={itemVariant}>
@@ -152,7 +157,10 @@ export default function PrivacyPolicyPage() {
           <p className="mb-8">Website: <a href="https://argylemedicalstaffing.com" className="text-brand-primary hover:underline">https://argylemedicalstaffing.com</a></p>
         </motion.div>
       </motion.main>
-      <Footer />
+      
+      <div className="relative z-10 w-full">
+        <Footer />
+      </div>
     </div>
   );
 }
