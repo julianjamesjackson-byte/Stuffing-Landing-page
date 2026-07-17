@@ -75,18 +75,23 @@ export default function ClinicianRegistrationForm() {
     setStatus('loading');
     setErrorMessage('');
 
-    const payload = {
-      ...formData,
-      resume: formData.resume ? formData.resume.name : null,
-    };
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'resume') {
+        if (value instanceof File) {
+          data.append('resume', value);
+        }
+      } else if (key === 'employmentType') {
+        data.append(key, JSON.stringify(value));
+      } else {
+        data.append(key, (value ?? "") as string);
+      }
+    });
 
     try {
       const response = await fetch("https://n8n.argylemedicalstaffing.com/webhook-test/argyle-clinician-registration", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        body: data,
       });
 
       if (!response.ok) {
