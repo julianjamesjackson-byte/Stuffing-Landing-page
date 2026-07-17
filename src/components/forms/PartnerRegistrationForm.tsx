@@ -66,7 +66,7 @@ export default function PartnerRegistrationForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch("https://n8n.argylemedicalstaffing.com/webhook-test/argyle-partner-registration", {
+      const response = await fetch("https://n8n.argylemedicalstaffing.com/webhook/argyle-partner-registration", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
