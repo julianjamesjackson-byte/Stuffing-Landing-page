@@ -62,7 +62,7 @@ export default function FacilityIntakeForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch("http://2.25.76.245:5678/webhook/argyle-facility-intake", {
+      const response = await fetch("https://n8n.argylemedicalstaffing.com/webhook/argyle-facility-intake", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
