@@ -43,7 +43,7 @@ const Footer = () => {
             <h4 className="mb-4 text-[12px] font-bold text-[#8DA6C1] uppercase tracking-wider">Corporate Headquarters</h4>
             <div className="flex flex-col gap-3 text-[13px] font-bold text-white">
               <p>1755 Argyle Ave #609<br />Los Angeles, CA 90028</p>
-              <p>(708) 397-9503</p>
+              <p>888-598-1646</p>
               <p>info@argylestaffing.com</p>
             </div>
           </div>
