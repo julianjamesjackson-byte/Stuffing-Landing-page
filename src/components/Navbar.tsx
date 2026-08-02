@@ -42,9 +42,11 @@ export default function Navbar() {
         <motion.a variants={navItemVariant} href="/#clinicians" className="font-sans text-[15px] font-medium text-brand-body dark:text-slate-200 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm transition-colors">
           For Clinicians
         </motion.a>
-        <motion.a variants={navItemVariant} href="/#about" className="font-sans text-[15px] font-medium text-brand-body dark:text-slate-200 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm transition-colors">
-          About
-        </motion.a>
+        <motion.div variants={navItemVariant}>
+          <Link to="/about-us" className="font-sans text-[15px] font-medium text-brand-body dark:text-slate-200 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-sm transition-colors">
+            About
+          </Link>
+        </motion.div>
       </div>
 
       {/* Right Actions */}
@@ -127,13 +129,13 @@ export default function Navbar() {
               >
                 For Clinicians
               </a>
-              <a
-                href="/#about"
+              <Link
+                to="/about-us"
                 onClick={() => setIsMenuOpen(false)}
                 className="font-sans text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-brand-primary transition-colors"
               >
                 About
-              </a>
+              </Link>
             </div>
             
             <hr className="border-slate-100 dark:border-slate-800" />

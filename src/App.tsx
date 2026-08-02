@@ -7,6 +7,12 @@ import ClinicianRegistrationPage from './components/pages/ClinicianRegistrationP
 import PartnerRegistrationPage from './components/pages/PartnerRegistrationPage';
 import PrivacyPolicyPage from './components/pages/PrivacyPolicyPage';
 import TermsOfServicePage from './components/pages/TermsOfServicePage';
+import OurStory from './components/pages/OurStory';
+import AboutUs from './components/pages/AboutUs';
+import CredentialingSupport from './components/pages/CredentialingSupport';
+import TravelAndContract from './components/pages/TravelAndContract';
+import CareerSupport from './components/pages/CareerSupport';
+import LicensingAssistance from './components/pages/LicensingAssistance';
 
 function LandingPage() {
   return (
@@ -31,6 +37,12 @@ function App() {
           <Route path="/partner-with-us" element={<PartnerRegistrationPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+          <Route path="/our-story" element={<OurStory />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/credentialing-support" element={<CredentialingSupport />} />
+          <Route path="/travel-and-contract" element={<TravelAndContract />} />
+          <Route path="/career-support" element={<CareerSupport />} />
+          <Route path="/licensing-assistance" element={<LicensingAssistance />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
